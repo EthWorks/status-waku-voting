@@ -53,7 +53,6 @@ class WakuVoting {
       const wakuMessage = await WakuMessage.fromBytes(payload, this.pollInitTopic, {
         timestamp: new Date(pollInit.timestamp),
       })
-      console.log(wakuMessage)
       await this.waku?.relay.send(wakuMessage)
     }
   }

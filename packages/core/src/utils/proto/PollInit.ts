@@ -50,7 +50,6 @@ export function decode(payload: Uint8Array, timestamp: Date | undefined) {
   try {
     const msg = proto.PollInit.decode(payload)
     if (!timestamp || timestamp.getTime() != msg.timestamp) {
-      console.log('wrong time')
       return undefined
     }
     if (
