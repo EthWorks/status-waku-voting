@@ -1,6 +1,5 @@
 import protons, { TimedPollVote } from 'protons'
 import { utils } from 'ethers'
-import { PollInitMsg } from '../../models/PollInitMsg'
 import { TimedPollVoteMsg } from '../../models/TimedPollVoteMsg'
 
 const proto = protons(`
