@@ -36,8 +36,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-family: Inter;
+    font-family: 'Inter', 'sans-serif';
     font-style: normal;
+  }
+
+  a, 
+  button {
+    cursor: pointer;
   }
 `
 

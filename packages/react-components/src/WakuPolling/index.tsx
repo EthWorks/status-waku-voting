@@ -35,12 +35,12 @@ function WakuPolling({ appName, signer }: WakuPollingProps) {
 
 const CreatePollButton = styled(Button)`
   width: 343px;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 44px;
-  margin-top: 49px;
   background-color: #ffb571;
   color: #ffffff;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 24px;
 
   &:hover {
     border: 1px solid #a53607;
@@ -50,7 +50,8 @@ const CreatePollButton = styled(Button)`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  align-items: center;
+  padding: 50px 180px;
   height: 100%;
 `
 

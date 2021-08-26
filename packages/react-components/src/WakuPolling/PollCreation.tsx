@@ -6,6 +6,7 @@ import { PollType } from '@status-waku-voting/core/dist/esm/src/types/PollType'
 import WakuVoting from '@status-waku-voting/core'
 import { Input } from '../components/Input'
 import addIcon from '../assets/svg/addIcon.svg'
+import closeButton from '../assets/svg/close.svg'
 import { SmallButton } from '../components/misc/Buttons'
 
 function getLocaleIsoTime(dateTime: Date) {
@@ -29,12 +30,12 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
 
   return (
     <NewPollBoxWrapper onClick={(e) => e.stopPropagation()}>
-      <BoxWrapper>
-        <NewPollBox>
-          <NewPollBoxTitle>
-            Create a poll
-            <CloseNewPollBoxButton onClick={() => setShowPollCreation(false)}>X</CloseNewPollBoxButton>
-          </NewPollBoxTitle>
+      <NewPollBox>
+        <NewPollBoxTitle>
+          Create a poll
+          <CloseNewPollBoxButton onClick={() => setShowPollCreation(false)} />
+        </NewPollBoxTitle>
+        <PollForm>
           <Input
             label={'Question or title of the poll'}
             placeholder={'E.g. What is your favourite color?'}
@@ -75,10 +76,10 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
               setShowPollCreation(false)
             }}
           >
-            Send
+            Create a poll
           </SmallButton>
-        </NewPollBox>
-      </BoxWrapper>
+        </PollForm>
+      </NewPollBox>
     </NewPollBoxWrapper>
   )
 }
@@ -90,45 +91,45 @@ const AddIcon = styled.div`
   margin-left: 10px;
 `
 
-const CloseNewPollBoxButton = styled.div`
-  width: 5px;
-  margin-right: 5px;
-  margin-left: auto;
-  font-weight: bold;
-  color: red;
+const CloseNewPollBoxButton = styled.button`
+  width: 24px;
+  height: 24px;
+  background-image: url(${closeButton});
+  background-color: transparent;
+  border: none;
 `
 
 const NewPollBoxTitle = styled.div`
   display: flex;
+  justify-content: space-between;
   font-style: normal;
   font-weight: bold;
   font-size: 17px;
   line-height: 24px;
 `
 
-const NewOptionButton = styled.div`
-  margin-top: 33px;
-  margin-bottom: 33px;
-  margin-left: auto;
-  margin-right: auto;
+const NewOptionButton = styled.button`
   display: flex;
-  font-family: 'Inter, sans-serif';
   font-style: normal;
-  font-weight: normal;
   font-size: 15px;
   line-height: 22px;
+  margin: 32px 0;
+  background-color: transparent;
+  border: none;
 `
 
 const AnswersWraper = styled.div`
-  margin-left: 64px;
-  margin-right: 64px;
+  max-width: 340px;
+  width: 100%;
 `
 
 const NewPollBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background-color: white;
-  padding: 20px;
+  padding: 24px;
+  padding-bottom: 32px;
   box-shadow: 10px 10px 31px -2px #a3a1a1;
   border-radius: 5px;
   overflow: auto;
@@ -136,15 +137,24 @@ const NewPollBox = styled.div`
   width: 468px;
 `
 
-const BoxWrapper = styled.div`
-  position: absolute;
-  marign-bottom: 100px;
-  left: 0px;
-  top: 0px;
-`
-
 const NewPollBoxWrapper = styled.div`
-  position: relative;
-  top: 50px;
-  left: calc(50% - 234px);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  transition: all 0.3s;
+  overflow: auto;
+`
+const PollForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15px;
+  line-height: 22px;
 `

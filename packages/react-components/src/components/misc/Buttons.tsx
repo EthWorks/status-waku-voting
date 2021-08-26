@@ -11,11 +11,17 @@ export const SmallButton = styled(Button)`
   width: 187px;
   background-color: #fff7ed;
   color: #a53607;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 32px;
 
-  &:hover {
-    border: 1px solid #a53607;
+  &:not(:disabled):hover {
+    background: #ffe4db;
+  }
+
+  &:not(:disabled):active {
+    background: #fffcf7;
+  }
+
+  &:disabled {
+    background: #f3f3f3;
+    color: #939ba1;
   }
 `

@@ -65,7 +65,6 @@ const Account = styled.button`
   font-weight: 500;
   font-size: 13px;
   line-height: 22px;
-  cursor: pointer;
 
   &:hover {
     border: 1px solid #ffb571;
@@ -125,7 +124,6 @@ const ButtonDisconnect = styled.button`
   line-height: 22px;
   text-align: center;
   padding: 15px 32px;
-  cursor: pointer;
   color: #a53607;
   background: #ffffff;
   border: 1px solid #eef2f5;
