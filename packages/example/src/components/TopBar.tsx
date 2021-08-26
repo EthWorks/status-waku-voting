@@ -66,6 +66,10 @@ const Account = styled.button`
   font-size: 13px;
   line-height: 22px;
   cursor: pointer;
+
+  &:hover {
+    border: 1px solid #ffb571;
+  }
 `
 
 const TitleWrapper = styled.div`
