@@ -107,6 +107,10 @@ const Button = styled.button`
     background: #888888;
     filter: grayscale(1);
   }
+
+  @media (max-width: 600px) {
+    padding: 3px 28px;
+  }
 `
 
 const ButtonDisconnect = styled.button`
@@ -157,6 +161,10 @@ const Wrapper = styled.div`
   height: 96px;
   background: #fbfcfe;
   display: flex;
+
+  @media (max-width: 600px) {
+    height: 64px;
+  }
 `
 const ContentWrapper = styled.div`
   display: flex;
@@ -166,4 +174,9 @@ const ContentWrapper = styled.div`
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
+
+  @media (max-width: 600px) {
+    padding: 16px;
+    padding-left: 24px;
+  }
 `
