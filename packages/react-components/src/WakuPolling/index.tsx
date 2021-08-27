@@ -35,12 +35,13 @@ function WakuPolling({ appName, signer }: WakuPollingProps) {
 
 const CreatePollButton = styled(Button)`
   width: 343px;
-  margin-bottom: 44px;
   background-color: #ffb571;
   color: #ffffff;
   font-weight: bold;
   font-size: 15px;
   line-height: 24px;
+  padding: 10px 125.5px;
+  margin-bottom: 48px;
 
   &:not(:disabled):hover {
     background: #a53607;
@@ -61,6 +62,7 @@ const CreatePollButton = styled(Button)`
     z-index: 10;
     margin-bottom: 16px;
     width: calc(100% - 32px);
+    padding: 0;
   }
 `
 
@@ -68,8 +70,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px 180px;
+  max-width: 1082px;
   height: 100%;
+  margin: 0 auto;
+  padding: 50px 0;
 
   @media (max-width: 600px) {
     padding: 32px 16px;
