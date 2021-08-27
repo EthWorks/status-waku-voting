@@ -59,11 +59,17 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
               />
             ))}
           </AnswersWraper>
-          <NewOptionButton onClick={() => setAnswers((answers) => [...answers, ''])}>
+          <NewOptionButton
+            onClick={(e) => {
+              e.preventDefault()
+              setAnswers((answers) => [...answers, ''])
+            }}
+          >
             Add another option
           </NewOptionButton>
           <SmallButton
-            onClick={async () => {
+            onClick={async (e) => {
+              e.preventDefault()
               await wakuVoting?.createTimedPoll(
                 signer,
                 question,
