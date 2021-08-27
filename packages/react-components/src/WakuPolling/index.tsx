@@ -54,6 +54,14 @@ const CreatePollButton = styled(Button)`
     background: #888888;
     filter: grayscale(1);
   }
+
+  @media (max-width: 425px) {
+    position: absolute;
+    bottom: 0;
+    z-index: 10;
+    margin-bottom: 16px;
+    width: calc(100% - 32px);
+  }
 `
 
 const Wrapper = styled.div`
@@ -62,6 +70,10 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 50px 180px;
   height: 100%;
+
+  @media (max-width: 600px) {
+    padding: 32px 16px;
+  }
 `
 
 export default WakuPolling

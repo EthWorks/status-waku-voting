@@ -151,13 +151,16 @@ const NewPollBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: white;
-  padding: 24px;
-  padding-bottom: 32px;
+  padding: 24px 24px 32px;
   box-shadow: 10px 10px 31px -2px #a3a1a1;
   border-radius: 5px;
   overflow: auto;
   z-index: 8;
   width: 468px;
+
+  @media (max-width: 600px) {
+    padding: 16px 16px 32px;
+  }
 `
 
 const NewPollBoxWrapper = styled.div`
@@ -173,6 +176,10 @@ const NewPollBoxWrapper = styled.div`
   z-index: 9999;
   transition: all 0.3s;
   overflow: auto;
+
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
 `
 const PollForm = styled.form`
   display: flex;
