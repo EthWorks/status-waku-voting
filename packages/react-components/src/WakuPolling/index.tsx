@@ -42,8 +42,17 @@ const CreatePollButton = styled(Button)`
   font-size: 15px;
   line-height: 24px;
 
-  &:hover {
-    border: 1px solid #a53607;
+  &:not(:disabled):hover {
+    background: #a53607;
+  }
+
+  &:not(:disabled):active {
+    background: #f4b77e;
+  }
+
+  &:disabled {
+    background: #888888;
+    filter: grayscale(1);
   }
 `
 

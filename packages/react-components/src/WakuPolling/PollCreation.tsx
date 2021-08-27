@@ -61,7 +61,6 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
           </AnswersWraper>
           <NewOptionButton onClick={() => setAnswers((answers) => [...answers, ''])}>
             Add another option
-            <AddIcon />
           </NewOptionButton>
           <SmallButton
             onClick={async () => {
@@ -84,13 +83,6 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
   )
 }
 
-const AddIcon = styled.div`
-  width: 20px;
-  height: 20px;
-  background-image: url(${addIcon});
-  margin-left: 10px;
-`
-
 const CloseNewPollBoxButton = styled.button`
   width: 24px;
   height: 24px;
@@ -110,12 +102,43 @@ const NewPollBoxTitle = styled.div`
 
 const NewOptionButton = styled.button`
   display: flex;
-  font-style: normal;
+  position: relative;
   font-size: 15px;
   line-height: 22px;
   margin: 32px 0;
+  padding-right: 30px;
+  color: #a53607;
   background-color: transparent;
   border: none;
+
+  &:hover {
+    color: #f4b77e;
+  }
+
+  &:active {
+    color: #a53607;
+  }
+
+  &:after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: #a53607;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-image: none;
+    -webkit-mask-image: url(${addIcon});
+    mask-image: ${addIcon};
+  }
+
+  &:hover::after {
+    background-color: #f4b77e;
+  }
 `
 
 const AnswersWraper = styled.div`
