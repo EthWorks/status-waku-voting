@@ -29,8 +29,12 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
   const [endTimePicker, setEndTimePicker] = useState(new Date(new Date().getTime() + 10000000))
 
   return (
-    <NewPollBoxWrapper onClick={(e) => e.stopPropagation()}>
-      <NewPollBox>
+    <NewPollBoxWrapper
+      onClick={() => {
+        setShowPollCreation(false)
+      }}
+    >
+      <NewPollBox onClick={(e) => e.stopPropagation()}>
         <NewPollBoxTitle>
           Create a poll
           <CloseNewPollBoxButton onClick={() => setShowPollCreation(false)} />
