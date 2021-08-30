@@ -194,6 +194,7 @@ const NewPollBox = styled.div`
   width: 468px;
   max-height: 90vh;
   background-color: white;
+  margin: 20vh auto 2vh;
   padding: 24px 24px 32px;
   box-shadow: 10px 10px 31px -2px #a3a1a1;
   border-radius: 5px;
@@ -202,6 +203,7 @@ const NewPollBox = styled.div`
 
   @media (max-width: 600px) {
     padding: 16px 16px 32px;
+    margin: 0;
   }
 `
 
@@ -211,7 +213,7 @@ const NewPollBoxWrapper = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.4);
@@ -220,6 +222,7 @@ const NewPollBoxWrapper = styled.div`
 
   @media (max-width: 600px) {
     padding: 16px;
+    align-items: center;
   }
 `
 const PollForm = styled.form`
