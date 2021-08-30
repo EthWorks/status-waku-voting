@@ -198,8 +198,9 @@ const NewPollBox = styled.div`
   padding: 24px 24px 32px;
   box-shadow: 10px 10px 31px -2px #a3a1a1;
   border-radius: 5px;
-  z-index: 8;
   overflow: scroll;
+  z-index: 9998;
+  width: 468px;
 
   @media (max-width: 600px) {
     padding: 16px 16px 32px;
