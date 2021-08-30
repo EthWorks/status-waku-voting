@@ -110,7 +110,7 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
               It will appear at the top of the poll list.
             </ConfirmationText>
             <SmallButton
-              onClick={async (e) => {
+              onClick={(e) => {
                 e.preventDefault()
                 setShowPollCreation(false)
               }}
