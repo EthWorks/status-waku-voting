@@ -25,6 +25,7 @@ type PollCreationProps = {
 export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCreationProps) {
   const [answers, setAnswers] = useState<string[]>(['', ''])
   const [question, setQuestion] = useState('')
+  const [showCreateConfirmation, setShowCreateConfirmation] = useState(false)
   const [selectedType, setSelectedType] = useState(PollType.NON_WEIGHTED)
   const [endTimePicker, setEndTimePicker] = useState(new Date(new Date().getTime() + 10000000))
   const body = document.getElementById('root')
@@ -49,55 +50,75 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
           Create a poll
           <CloseNewPollBoxButton onClick={() => setShowPollCreation(false)} />
         </NewPollBoxTitle>
-        <PollForm>
-          <Input
-            label={'Question or title of the poll'}
-            placeholder={'E.g. What is your favourite color?'}
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-          />
+        {!showCreateConfirmation && (
+          <PollForm>
+            <Input
+              label={'Question or title of the poll'}
+              placeholder={'E.g. What is your favourite color?'}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+            />
 
-          <AnswersWraper>
-            {answers.map((answer, idx) => (
-              <Input
-                key={idx}
-                label={`Option ${idx + 1}`}
-                value={answer}
-                onChange={(e) =>
-                  setAnswers((answers) => {
-                    const newAnswers = [...answers]
-                    newAnswers[idx] = e.target.value
-                    return newAnswers
-                  })
-                }
-              />
-            ))}
-          </AnswersWraper>
-          <NewOptionButton
-            onClick={(e) => {
-              e.preventDefault()
-              setAnswers((answers) => [...answers, ''])
-            }}
-          >
-            Add another option
-          </NewOptionButton>
-          <SmallButton
-            onClick={async (e) => {
-              e.preventDefault()
-              await wakuVoting?.createTimedPoll(
-                signer,
-                question,
-                answers,
-                selectedType,
-                undefined,
-                endTimePicker.getTime()
-              )
-              setShowPollCreation(false)
-            }}
-          >
-            Create a poll
-          </SmallButton>
-        </PollForm>
+            <AnswersWraper>
+              {answers.map((answer, idx) => (
+                <Input
+                  key={idx}
+                  label={`Option ${idx + 1}`}
+                  value={answer}
+                  onChange={(e) =>
+                    setAnswers((answers) => {
+                      const newAnswers = [...answers]
+                      newAnswers[idx] = e.target.value
+                      return newAnswers
+                    })
+                  }
+                />
+              ))}
+            </AnswersWraper>
+            <NewOptionButton
+              onClick={(e) => {
+                e.preventDefault()
+                setAnswers((answers) => [...answers, ''])
+              }}
+            >
+              Add another option
+            </NewOptionButton>
+            <SmallButton
+              onClick={async (e) => {
+                e.preventDefault()
+                await wakuVoting?.createTimedPoll(
+                  signer,
+                  question,
+                  answers,
+                  selectedType,
+                  undefined,
+                  endTimePicker.getTime()
+                )
+                setShowCreateConfirmation(true)
+              }}
+            >
+              Create a poll
+            </SmallButton>
+          </PollForm>
+        )}
+
+        {showCreateConfirmation && (
+          <Confirmation>
+            <ConfirmationText>
+              Your poll has been created!
+              <br />
+              It will appear at the top of the poll list.
+            </ConfirmationText>
+            <SmallButton
+              onClick={async (e) => {
+                e.preventDefault()
+                setShowPollCreation(false)
+              }}
+            >
+              Close
+            </SmallButton>
+          </Confirmation>
+        )}
       </NewPollBox>
     </NewPollBoxWrapper>
   )
@@ -207,4 +228,14 @@ const PollForm = styled.form`
   align-items: center;
   font-size: 15px;
   line-height: 22px;
+`
+const Confirmation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const ConfirmationText = styled.div`
+  text-align: center;
+  margin: 32px 0;
 `
