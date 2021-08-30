@@ -1,11 +1,10 @@
 pragma solidity ^0.8.5;
 
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
-import '@openzeppelin/contracts/utils/cryptography/ECDSA.sol';
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 
 contract VotingContract {
-    using ECDSA for bytes32;
     using SafeMath for uint256;
 
     uint256 private constant VOTING_LENGTH = 1000;
@@ -43,6 +42,15 @@ contract VotingContract {
 
     bytes32 DOMAIN_SEPARATOR;
 
+    function test(Vote calldata vote,bytes32 r, bytes32 vs) public view returns(address){
+        bytes32 digest = keccak256(abi.encodePacked(
+            "\x19\x01",
+            DOMAIN_SEPARATOR,
+            hash(vote)
+        ));
+        return ECDSA.recover(digest,r,vs);
+    }
+
     function hash(EIP712Domain memory eip712Domain) internal pure returns (bytes32) {
         return
             keccak256(
@@ -59,7 +67,7 @@ contract VotingContract {
     constructor(IERC20 _address) {
         token = _address;
         DOMAIN_SEPARATOR = hash(
-            EIP712Domain({ name: 'Voting Contract', version: '1', chainId: 1, verifyingContract: address(this) })
+            EIP712Domain({ name: 'Voting Contract', version: '1', chainId: 1, verifyingContract: 0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC })
         );
     }
 
@@ -90,16 +98,16 @@ contract VotingContract {
     event VoteCast(uint256 roomId, address voter);
     event NotEnoughToken(uint256 roomId, address voter);
 
-    bytes32 constant VOTE_TYPEHASH = keccak256(
-        "Mail(Person from,Person to,string contents)Person(string name,address wallet)"
+    bytes32 public constant VOTE_TYPEHASH = keccak256(
+        "Vote(uint256 roomIdAndType,uint256 sntAmount,address voter)"
     );
 
     function hash(Vote calldata vote) internal pure returns (bytes32) {
         return keccak256(abi.encode(
             VOTE_TYPEHASH,
-            keccak256(abi.encode(vote.voter)),
-            keccak256(abi.encode(vote.roomIdAndType)),
-            keccak256(abi.encode(vote.sntAmount))
+            vote.roomIdAndType,
+            vote.sntAmount,
+            vote.voter
         ));
     }
 
@@ -110,7 +118,7 @@ contract VotingContract {
             DOMAIN_SEPARATOR,
             hash(vote)
         ));
-        return digest.recover(abi.encode(r, vs)) == vote.voter;
+        return ECDSA.recover(digest,r,vs) == vote.voter;
     }
 
     struct Vote {
