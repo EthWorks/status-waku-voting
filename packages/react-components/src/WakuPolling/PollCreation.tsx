@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Wallet } from 'ethers'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import styled from 'styled-components'
@@ -27,6 +27,16 @@ export function PollCreation({ signer, wakuVoting, setShowPollCreation }: PollCr
   const [question, setQuestion] = useState('')
   const [selectedType, setSelectedType] = useState(PollType.NON_WEIGHTED)
   const [endTimePicker, setEndTimePicker] = useState(new Date(new Date().getTime() + 10000000))
+  const body = document.getElementById('root')
+
+  useEffect(() => {
+    if (body) {
+      body.style.position = 'fixed'
+      return () => {
+        body.style.position = 'static'
+      }
+    }
+  }, [])
 
   return (
     <NewPollBoxWrapper
@@ -160,13 +170,14 @@ const NewPollBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 468px;
+  max-height: 90vh;
   background-color: white;
   padding: 24px 24px 32px;
   box-shadow: 10px 10px 31px -2px #a3a1a1;
   border-radius: 5px;
-  overflow: auto;
   z-index: 8;
-  width: 468px;
+  overflow: scroll;
 
   @media (max-width: 600px) {
     padding: 16px 16px 32px;
@@ -185,7 +196,6 @@ const NewPollBoxWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 9999;
   transition: all 0.3s;
-  overflow: auto;
 
   @media (max-width: 600px) {
     padding: 16px;
