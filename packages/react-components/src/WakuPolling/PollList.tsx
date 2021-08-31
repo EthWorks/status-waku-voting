@@ -1,30 +1,34 @@
 import WakuVoting from '@status-waku-voting/core'
 import { DetailedTimedPoll } from '@status-waku-voting/core/dist/esm/src/models/DetailedTimedPoll'
 import { Wallet } from 'ethers'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Poll } from './Poll'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import styled from 'styled-components'
 
+
+
 type PollListProps = {
-  wakuVoting: WakuVoting | undefined
+  wakuVoting: WakuVoting
   signer: Wallet | JsonRpcSigner | undefined
 }
 
 export function PollList({ wakuVoting, signer }: PollListProps) {
   const [polls, setPolls] = useState<DetailedTimedPoll[]>([])
   const [dividedPolls, setDividedPolls] = useState<DetailedTimedPoll[][]>([[], [], []])
+
+  const updatePolls = useCallback(async () => {
+    const { DetailedTimedPolls, updated } = await wakuVoting.getDetailedTimedPolls()
+    if (updated) {
+      setPolls(DetailedTimedPolls)
+    }
+  },[])
+
   useEffect(() => {
-    const interval = setInterval(async () => {
-      if (wakuVoting) {
-        const { DetailedTimedPolls, updated } = await wakuVoting.getDetailedTimedPolls()
-        if (updated) {
-          setPolls(DetailedTimedPolls)
-        }
-      }
-    }, 1000)
+    updatePolls()
+    const interval = setInterval(updatePolls, 10000)
     return () => clearInterval(interval)
-  }, [wakuVoting])
+  }, [])
 
   useEffect(() => {
     let arrayNo = 0

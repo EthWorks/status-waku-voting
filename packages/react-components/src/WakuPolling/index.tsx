@@ -23,9 +23,9 @@ function WakuPolling({ appName, signer, localhost }: WakuPollingProps) {
       relay: {
         send(msg: any) {
           if (!(this as any).messages[msg.contentTopic]) {
-            ;(this as any).messages[msg.contentTopic] = []
+            ; (this as any).messages[msg.contentTopic] = []
           }
-          ;(this as any).messages[msg.contentTopic] = [...(this as any).messages[msg.contentTopic], msg]
+          ; (this as any).messages[msg.contentTopic] = [...(this as any).messages[msg.contentTopic], msg]
         },
       },
       store: {
@@ -37,6 +37,7 @@ function WakuPolling({ appName, signer, localhost }: WakuPollingProps) {
     waku.relay.send = waku.relay.send.bind(waku)
     waku.store.queryHistory = waku.store.queryHistory.bind(waku)
   }
+
   useEffect(() => {
     WakuVoting.create(appName, '0x01', waku).then((e) => setWakuVoting(e))
   }, [])
@@ -49,7 +50,9 @@ function WakuPolling({ appName, signer, localhost }: WakuPollingProps) {
       <CreatePollButton disabled={!signer} onClick={() => setShowPollCreation(true)}>
         Create a poll
       </CreatePollButton>
-      <PollList wakuVoting={wakuVoting} signer={signer} />
+      {wakuVoting &&
+        <PollList wakuVoting={wakuVoting} signer={signer} />
+      }
     </Wrapper>
   )
 }

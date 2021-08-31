@@ -18,13 +18,12 @@ function decodeWakuMessages<T>(
 }
 
 async function receiveNewWakuMessages(lastTimestamp: number, topic: string, waku: Waku | undefined) {
-  const messages = await waku?.store.queryHistory([topic])
-
+  console.log("test")
+  console.log(new Date(lastTimestamp))
+  const messages = await waku?.store.queryHistory([topic],{startTime:new Date(lastTimestamp * 1000),endTime:new Date()})
+  console.log(messages)
   if (messages) {
-    messages.sort((a, b) => (a.timestamp && b.timestamp && a.timestamp?.getTime() < b.timestamp?.getTime() ? 1 : -1))
-    const lastMessageIndex = messages.findIndex((message) => message.timestamp?.getTime() === lastTimestamp)
-    const newMessages = lastMessageIndex === -1 ? messages : messages.slice(0, lastMessageIndex)
-    return newMessages
+    return messages
   }
   return []
 }
