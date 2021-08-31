@@ -1,84 +1,186 @@
-# status-community-dapp/contracts 
-Community directory curator contracts
+# status-waku-voting/contracts 
+Status white label proposal contract
 
 
-## Mock Contract
+## Voting Contract
 
-Mock Contract is a mock of voting smart contract for community curation.
+Voting contract is a smart contract created for purpose of
+having smart contract that can create and save results of proposals.
 
-This Contract is responsible for creating voting rooms in which you can vote for addition or deletion of community into directory.
-Directory of communities will be held on another smart contract at finalization this contract will call smart contract with directory, to make necessary changes.
-When voting room is initialized for given community another can't be started for the same community until previous one was finalized.
+This Contract is responsible for creating voting rooms in which you can vote for or against them.
 
 Lifecycle of voting room:
     1. initialize voting room.
     2. period of time when votes are accepted.
-    3. voting time is finished votes are no longer accepted and voting room can be finalized.
-    4. finalization
+    3. voting time is finished votes are no longer accepted.
     
-### Voting room initialization
+### Types
 
-```solidity
-function initializeVotingRoom(uint8 voteType, address publicKey) public
+Main types used for voting are:
+
+- `VotingRoom`
+
+    Is a type that hold information about voting room for a given proposal
+
+    #### Fields
+    ```solidity
+    //block at which room was created
+    uint256 startBlock; 
+    //timestamp after which new votes won't be accepted
+    uint256 endAt; 
+    // question of a proposal which voting room describes
+    string question;
+    // description for proposal
+    string description;
+    // amount of summed votes for
+    uint256 totalVotesFor;
+    // amount of summed votes against
+    uint256 totalVotesAgainst;
+    //list of addresses that already voted
+    address[] voters;
+    ```
+
+- `Vote`
+
+    Is a type that hold information about vote for a given voting room
+
+    #### Fields
+    ```solidity
+    //address of a voter
+    address voter;
+    // encoded roomId and type
+    // first bit this field is a vote type:
+    // 1 is a vote for
+    // 0 is a vote against
+    // rest of this field is a roomId shifted one bit to 
+    // the left
+    uint256 roomIdAndType;
+    // amount of token used to vote
+    uint256 tokenAmount;
+    //signature of vote
+    bytes32 r;
+    bytes32 vs;
+    ```
+
+### Constants and variables
+
+- `token`
+    Variable that holds address of token used for vote verification. It is assigned at contract creation.
+
+- `VOTING_LENGTH`
+    Constant describing length of voting room in seconds
+    TODO:
+        - maybe set voting length per voting room ?
+
+- `EIP712DOMAIN_TYPEHASH`
+    Constant holding type hash of EIP712 domain as per EIP712 specification
+
+- `VOTE_TYPEHASH`
+    Constant holding type hash of Vote as per EIP712 specification
+
+- `DOMAIN_SEPARATOR`
+    Variable holding hash of domain separator according to EIP712 spec. Assigned at smart contract creation.
+
+- `voted`
+    this variable holds information if given address voted in a given voting room. So it is a mapping of room id to mapping of addresses to bools which say whether or not given address voted.
+
+- `votingRooms`
+    Array that holds all voting rooms. roomId of voting room is equivalent to its index in array
+
+### Signing with EIP712
+
+This smart contract uses EIP712 for signing vote msg.
+The structure of typed data for vote messages is as follows:
+```ts
+{
+  types: {
+      EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+          { name: 'chainId', type: 'uint256' },
+          { name: 'verifyingContract', type: 'address' },
+      ],
+      Vote: [
+        { name: 'roomIdAndType', type: 'uint256' },
+        { name: 'tokenAmount', type: 'uint256' },
+        { name: 'voter', type: 'address' },
+      ],
+  },
+  primaryType: 'Vote',
+  domain: {
+      name: 'Voting Contract',
+      version: '1',
+      chainId: chainId,
+      verifyingContract: contract.address,
+  },
+  message: {
+      voter: voterAddress,
+      tokenAmount: tokenAmount,
+      roomIdAndType: roomIdAndType
+  }
+}
 ```
 
-When initializing a voting user needs to supply a type of vote (0: removal, 1: addition) and publicKey of community.
-Voting room can't be created if given community is undergoing vote.
-If voting room has been created message is emitted.
+For more information about EIP-712 go to [docs](https://eips.ethereum.org/EIPS/eip-712)
 
-after voting room creation event is emitted
+### Functions
 
-```solidity
-event VotingRoomStarted(uint256 roomId)
-```
+- `constructor(IERC20 _address)`
+    assigns `_address` to `token` and generates `DOMAIN_SEPARATOR`
 
-TODO:
-    -vote type chosen automatically based if community is in directory
+- `getVotingRooms()`
+    returns votingRooms
 
-### Voting room structure
+- `listRoomVoters(uint256 roomId)`
+    returns a list of voters for a given voting room. Reverts if roomId doesn't exist.
 
-```solidity
-    enum VoteType { REMOVE, ADD }
+- `initializeVotingRoom(string calldata question,string calldata description,uint256 voteAmount)`
+    Creates a new voting room with vote for set to voteAmount.
+    First checks if voter has enough tokens to set vote for.
+    Then creates a new voting room.
+    `startBlock` is set as current block number.
+    `endAt` is set a current block timestamp plus.`VOTING_LENGTH`.
+    `question` is set as argument `question`.
+    `description` is set as argument `description`.
+    `totalVotesFor` is set as argument `voteAmount`.
+    Mapping `voted` of new voting room id of `msg.sender` is set to true to reflect that message sender has voted on this voting room with `voteAmount`.
+    `votingRooms` are appended with newVotingRoom and `voters` in this new appended element are appended with message sender.
+    After room init `VotingRoomStarted` is emitted.
 
-    struct VotingRoom {
-        uint256 startBlock; // block at which vote was initialized
-        uint256 endAt; // timestamp of when the voting room will close
-        VoteType voteType; // type of voting room (1: removal, 2: addition)
-        bool finalized; // was voting room finalized ( community added/delted from directory )
-        address community; // publicKey of community
-        uint256 totalVotesFor; // sum of snt votes for vote
-        uint256 totalVotesAgainst; // sum of snt votes against
-        mapping(address => bool) voted; // list of voters that voted
-    }
-```
+- `verify(Vote calldata vote,bytes32 r,bytes32 vs)`
+    Function used to verify that `vote` was signed by `vote.voter` as per EIP712 specification.
+    See [docs](https://eips.ethereum.org/EIPS/eip-712) for more info.
 
-### Finalizing voting room
+- `updateRoomVotes(Vote calldata vote, uint256 roomId)`
+    Sets totalVotes amount of voting room with index corresponding to `roomId`.
 
-Once time of voting has passed community needs to be added or removed from directory according to vote result.
-For that smart contract has vote finalization function.
+    If voting first bit of `vote.roomIdAndType` is 1 that means that vote is for and `vote.tokenAmount` is added to `votingRooms[roomId].totalVotesFor`, otherwise if `vote.roomIdAndType` is 0 `vote.tokenAmount` is added to `votingRooms[roomId].totalVotesAgainst`.
 
-```solidity
-function finalizeVotingRoom(uint128 voteID) public
-```
+    After that add new address to room `voters` and updates mapping `voted` accordingly.
 
-after finalization event is emitted
+- `castVotes(Vote[] calldata votes)`
+    Function used to cast votes in rooms.
+    Function accepts an array of votes of type `Vote`.
 
-```solidity
-event VotingRoomFinalized(uint256 roomId);
-```
+    All votes are looped through and verified that votes are:
+    - properly signed
+    - voter has enough tokens to vote
+    - voting room exists
+    - voting room hasn't been closed
 
-### Voting
+    Vote verification is as follows.
+    First roomId is decoded from `vote.roomIdAndType` which means shifting it to the right once.
 
-Everyone can send a list of aggregated and signed votes
+    Then it is verified that voting room with given roomId exists and isn't closed if not whole function reverts, this is to discourage grouping votes for different voting rooms together (! maybe it should be changed so that votes for multiple voting rooms can be cast ? !).
+    
+    After that it is verified that `vote` has been signed by `vote.voter`. If not function goes to another vote in array (IDEA: maybe vote verification failed should be emitted ?).
 
-```solidity
-    struct SignedVote {
-        address voter; // address of voter
-        uint256 roomIdAndType; // first bit is type of vote (0: against, 1: for) rest of bits are room Id.
-        uint256 sntAmount; // amount of snt to vote
-        bytes32 r; // r parameter of signature
-        bytes32 vs; // vs parameter of signature [see](https://eips.ethereum.org/EIPS/eip-2098)
-    }
+    Then it is checked that `vote.voter` didn't vote in this vote room before if he did function goes to another voter (IDEA: emit alreadyVoted ?).
 
-    function castVotes(SignedVote[] calldata votes) public
-```
+    Last check is whether `vote.voter` has enough tokens to vote. If he does not `NotEnoughToken` is emitted and function goes to another voter. If he does voting room is updated with `updateRoomVotes` and `VoteCast` is emitted.
+
+    TODO:
+    - not emit on Not enough tokens ?
+    - emit on wrong signature ?
+    - if instead of require for voting room not found ?
+    - if instead of require for vote closed ?
