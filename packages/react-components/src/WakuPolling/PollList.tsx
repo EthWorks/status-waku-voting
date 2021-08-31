@@ -63,6 +63,7 @@ const PollListWrapper = styled.div`
 
   @media (max-width: 768px) {
     gap: 16px;
+    justify-content: center;
   }
 `
 
@@ -70,4 +71,8 @@ const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
 `

@@ -95,6 +95,10 @@ const PollWrapper = styled.div`
   border-radius: 6px;
   background-color: #fbfbfe;
   padding: 32px;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+  }
 `
 
 const PollTitle = styled.div`
