@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEthers, shortenAddress } from '@usedapp/core'
+import dapp from '../assets/images/dapp.svg'
+import status from '../assets/images/status.svg'
+import metamask from '../assets/images/metamask.svg'
+import { Modal } from './Modal'
+
 type TopBarProps = {
   logo: string
   title: string
@@ -9,6 +14,7 @@ type TopBarProps = {
 export function TopBar({ logo, title }: TopBarProps) {
   const { activateBrowserWallet, deactivate, account } = useEthers()
   const [isOpened, setIsOpened] = useState(false)
+  const [selectConnect, setSelectConnect] = useState(false)
 
   return (
     <Wrapper>
@@ -35,9 +41,19 @@ export function TopBar({ logo, title }: TopBarProps) {
             </ButtonDisconnect>
           </AccountWrap>
         ) : (
-          <Button onClick={() => activateBrowserWallet()}>Connect</Button>
+          <Button onClick={() => setSelectConnect(true)}>Connect</Button>
         )}
       </ContentWrapper>
+
+      {selectConnect && (
+        <Modal heading="Connect" setShowModal={setSelectConnect}>
+          <Networks>
+            <Network style={{ backgroundImage: `url(${dapp})` }} onClick={() => activateBrowserWallet()} />
+            <Network style={{ backgroundImage: `url(${status})` }} onClick={() => activateBrowserWallet()} />
+            <Network style={{ backgroundImage: `url(${metamask})` }} onClick={() => activateBrowserWallet()} />
+          </Networks>
+        </Modal>
+      )}
     </Wrapper>
   )
 }
@@ -180,4 +196,20 @@ const ContentWrapper = styled.div`
     padding: 16px;
     padding-left: 24px;
   }
+`
+const Networks = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`
+
+const Network = styled.button`
+  width: 176px;
+  height: 64px;
+  margin-top: 32px;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
 `
