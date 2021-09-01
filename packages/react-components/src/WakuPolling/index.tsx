@@ -17,7 +17,7 @@ type WakuPollingProps = {
 }
 
 function WakuPolling({ appName, signer, localhost }: WakuPollingProps) {
-  const { account } = useEthers()
+  const { activateBrowserWallet, account } = useEthers()
   const [wakuVoting, setWakuVoting] = useState<WakuVoting | undefined>(undefined)
   const [showPollCreation, setShowPollCreation] = useState(false)
   const [selectConnect, setSelectConnect] = useState(false)
@@ -57,7 +57,15 @@ function WakuPolling({ appName, signer, localhost }: WakuPollingProps) {
           Create a poll
         </CreatePollButton>
       ) : (
-        <CreatePollButton onClick={() => setSelectConnect(true)}>Connect to vote</CreatePollButton>
+        <CreatePollButton
+          onClick={() => {
+            if ((window as any).ethereum) {
+              activateBrowserWallet()
+            } else setSelectConnect(true)
+          }}
+        >
+          Connect to vote
+        </CreatePollButton>
       )}
       {selectConnect && (
         <Modal heading="Connect" setShowModal={setSelectConnect}>
