@@ -41,16 +41,24 @@ export function TopBar({ logo, title }: TopBarProps) {
             </ButtonDisconnect>
           </AccountWrap>
         ) : (
-          <Button onClick={() => setSelectConnect(true)}>Connect</Button>
+          <Button
+            onClick={() => {
+              if ((window as any).ethereum) {
+                activateBrowserWallet()
+              } else setSelectConnect(true)
+            }}
+          >
+            Connect
+          </Button>
         )}
       </ContentWrapper>
 
       {selectConnect && (
         <Modal heading="Connect" setShowModal={setSelectConnect}>
           <Networks>
-            <Network style={{ backgroundImage: `url(${dapp})` }} onClick={() => activateBrowserWallet()} />
-            <Network style={{ backgroundImage: `url(${status})` }} onClick={() => activateBrowserWallet()} />
-            <Network style={{ backgroundImage: `url(${metamask})` }} onClick={() => activateBrowserWallet()} />
+            <Network href="https://ethereum.org/en/dapps/" style={{ backgroundImage: `url(${dapp})` }} />
+            <Network href="https://status.im/get/" style={{ backgroundImage: `url(${status})` }} />
+            <Network href="https://metamask.io/" style={{ backgroundImage: `url(${metamask})` }} />
           </Networks>
         </Modal>
       )}
@@ -204,7 +212,7 @@ const Networks = styled.div`
   width: 100%;
 `
 
-const Network = styled.button`
+const Network = styled.a`
   width: 176px;
   height: 64px;
   margin-top: 32px;
