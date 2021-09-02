@@ -10,10 +10,10 @@ import { ConnectButton, Account, ButtonDisconnect } from './misc/Buttons'
 type TopBarProps = {
   logo: string
   title: string
-  color: string
+  theme: string
 }
 
-export function TopBar({ logo, title, color }: TopBarProps) {
+export function TopBar({ logo, title, theme }: TopBarProps) {
   const { activateBrowserWallet, deactivate, account } = useEthers()
   const [isOpened, setIsOpened] = useState(false)
   const [selectConnect, setSelectConnect] = useState(false)
@@ -30,7 +30,7 @@ export function TopBar({ logo, title, color }: TopBarProps) {
         {account ? (
           <AccountWrap>
             <Account
-              color={color}
+              theme={theme}
               onClick={(e) => {
                 e.stopPropagation()
                 setIsOpened(!isOpened)
@@ -45,7 +45,7 @@ export function TopBar({ logo, title, color }: TopBarProps) {
           </AccountWrap>
         ) : (
           <ConnectButton
-            color={color}
+            theme={theme}
             onClick={() => {
               if ((window as any).ethereum) {
                 activateBrowserWallet()
