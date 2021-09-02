@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { DAppProvider, ChainId } from '@usedapp/core'
 import { DEFAULT_CONFIG } from '@usedapp/core/dist/cjs/src/model/config/default'
 import { WakuPolling } from './components/WakuPolling'
-import { TopBar } from './components/TopBar'
+import { TopBar } from '@status-waku-voting/react-components'
 import pollingIcon from './assets/images/pollingIcon.svg'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { useEthers } from '@usedapp/core'
@@ -61,7 +61,7 @@ export function Polling() {
 
   return (
     <Wrapper>
-      <TopBar logo={pollingIcon} title={'Polling Dapp'} />
+      <TopBar logo={pollingIcon} title={'Polling Dapp'} color={'#ffb571'} />
       <WakuPolling appName={'testApp_'} signer={signer} />
     </Wrapper>
   )

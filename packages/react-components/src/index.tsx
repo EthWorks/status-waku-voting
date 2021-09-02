@@ -1,8 +1,9 @@
 import { Modal } from './components/Modal'
 import { Input } from './components/Input'
 import { Networks } from './components/Networks'
+import { TopBar } from './components/TopBar'
 import { RadioGroup } from './components/radioGroup'
-import { Button, SmallButton } from './components/misc/Buttons'
+import { Button, SmallButton, ConnectButton, ButtonDisconnect, Account } from './components/misc/Buttons'
 import { colorRouletteGenerator } from './style/colors'
 import checkCircleIcon from './assets/svg/checkCircle.svg'
 import addIcon from './assets/svg/addIcon.svg'
@@ -16,9 +17,13 @@ export {
   Modal,
   Input,
   Networks,
+  TopBar,
   RadioGroup,
   Button,
   SmallButton,
+  ConnectButton,
+  ButtonDisconnect,
+  Account,
   colorRouletteGenerator,
   checkCircleIcon,
   addIcon,
