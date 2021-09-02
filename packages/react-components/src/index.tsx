@@ -5,6 +5,7 @@ import { TopBar } from './components/TopBar'
 import { RadioGroup } from './components/radioGroup'
 import { Button, SmallButton, ConnectButton, ButtonDisconnect, Account } from './components/misc/Buttons'
 import { colorRouletteGenerator } from './style/colors'
+import { GlobalStyle } from './style/GlobalStyle'
 import checkCircleIcon from './assets/svg/checkCircle.svg'
 import addIcon from './assets/svg/addIcon.svg'
 import checkIcon from './assets/svg/checkIcon.svg'
@@ -25,6 +26,7 @@ export {
   ButtonDisconnect,
   Account,
   colorRouletteGenerator,
+  GlobalStyle,
   checkCircleIcon,
   addIcon,
   checkIcon,
