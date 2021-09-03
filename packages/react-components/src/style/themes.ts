@@ -11,7 +11,7 @@ export const orangeTheme: Theme = {
   secondaryColor: '#a53607',
   activeTextColor: '#ffffff',
   activeBackgroundColor: '#f4b77e',
-  backgroundColor: ' #fbfcfe',
+  backgroundColor: '#fbfcfe',
 }
 
 export const blueTheme: Theme = {
