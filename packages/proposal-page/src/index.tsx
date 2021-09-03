@@ -28,7 +28,7 @@ function Proposals() {
   const { account, library, activateBrowserWallet, deactivate } = useEthers()
   return (
     <Wrapper>
-      <TopBarProposal
+      <TopBar
         logo={votingIcon}
         title={'Proposals Dapp'}
         theme={blueTheme}
@@ -55,9 +55,4 @@ export function ProposalPage() {
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
-`
-const TopBarProposal = styled(TopBar)`
-  @media (max-width: 425px) {
-    background-color: #f8faff;
-  }
 `
