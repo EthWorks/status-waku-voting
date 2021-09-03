@@ -89,5 +89,6 @@ const HeaderText = styled.p`
   @media (max-width: 425px) {
     font-size: 13px;
     line-height: 18px;
+    margin-bottom: 16px;
   }
 `
