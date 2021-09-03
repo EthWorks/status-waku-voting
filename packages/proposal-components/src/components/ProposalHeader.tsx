@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
-import { Modal, Networks, Button } from '@status-waku-voting/react-components'
+import { Modal, Networks, CreateButton } from '@status-waku-voting/react-components'
+import { Theme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 
-export function ProposalHeader() {
+type ProposalHeaderProps = {
+  theme: Theme
+}
+
+export function ProposalHeader({ theme }: ProposalHeaderProps) {
   const { activateBrowserWallet, account } = useEthers()
   const [showProposeCreation, setShowProposeCreation] = useState(false)
   const [selectConnect, setSelectConnect] = useState(false)
@@ -17,9 +22,12 @@ export function ProposalHeader() {
         </HeaderText>
       </Header>
       {account ? (
-        <CreateButton onClick={() => setShowProposeCreation(true)}>Create proposal</CreateButton>
+        <CreateButton theme={theme} onClick={() => setShowProposeCreation(true)}>
+          Create proposal
+        </CreateButton>
       ) : (
         <CreateButton
+          theme={theme}
           onClick={() => {
             if ((window as any).ethereum) {
               activateBrowserWallet()
@@ -81,29 +89,5 @@ const HeaderText = styled.p`
   @media (max-width: 425px) {
     font-size: 13px;
     line-height: 18px;
-  }
-`
-
-const CreateButton = styled(Button)`
-  width: 343px;
-  background-color: #ffb571;
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 15px;
-  line-height: 24px;
-  margin-bottom: 48px;
-  &:not(:disabled):hover {
-    background: #a53607;
-  }
-  &:not(:disabled):active {
-    background: #f4b77e;
-  }
-  @media (max-width: 425px) {
-    position: fixed;
-    bottom: 0;
-    z-index: 10;
-    margin-bottom: 16px;
-    width: calc(100% - 32px);
-    padding: 0;
   }
 `

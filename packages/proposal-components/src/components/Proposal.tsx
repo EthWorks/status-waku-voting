@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ProposalHeader } from './ProposalHeader'
+import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 
 export function Proposal() {
   return (
     <ProposalWrapper>
-      <ProposalHeader />
+      <ProposalHeader theme={blueTheme} />
     </ProposalWrapper>
   )
 }
