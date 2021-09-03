@@ -4,7 +4,7 @@ import { shortenAddress } from '@usedapp/core'
 import { Modal } from './Modal'
 import { ConnectButton, Account, ButtonDisconnect } from './misc/Buttons'
 import { Networks } from './Networks'
-import { blueTheme, Theme } from '../style/themes'
+import { Theme } from '../style/themes'
 
 type TopBarProps = {
   logo: string
