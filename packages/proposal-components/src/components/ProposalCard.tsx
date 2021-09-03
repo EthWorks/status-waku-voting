@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ProposalInfo } from './ProposalInfo'
-import { ProposalVote } from './ProposalVote'
+import { ProposalVote } from './ProposalVoteCard/ProposalVote'
 
 export function ProposalCard() {
   return (
