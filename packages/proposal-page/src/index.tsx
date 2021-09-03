@@ -11,7 +11,7 @@ export function ProposalPage() {
   return (
     <Wrapper>
       <GlobalStyle />
-      <TopBar logo={votingIcon} title={'Proposals Dapp'} theme={blueTheme} />
+      <TopBarProposal logo={votingIcon} title={'Proposals Dapp'} theme={blueTheme} />
       <Proposal />
     </Wrapper>
   )
@@ -20,4 +20,9 @@ export function ProposalPage() {
 const Wrapper = styled.div`
   height: 100%;
   width: 100%;
+`
+const TopBarProposal = styled(TopBar)`
+  @media (max-width: 425px) {
+    background-color: #f8faff;
+  }
 `

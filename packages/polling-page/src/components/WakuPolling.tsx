@@ -23,11 +23,11 @@ export function WakuPolling({ appName, signer }: WakuPollingProps) {
         <PollCreation signer={signer} wakuPolling={wakuPolling} setShowPollCreation={setShowPollCreation} />
       )}
       {account ? (
-        <CreatePollButton disabled={!signer} onClick={() => setShowPollCreation(true)}>
+        <CreateButton disabled={!signer} onClick={() => setShowPollCreation(true)}>
           Create a poll
-        </CreatePollButton>
+        </CreateButton>
       ) : (
-        <CreatePollButton
+        <CreateButton
           onClick={() => {
             if ((window as any).ethereum) {
               activateBrowserWallet()
@@ -35,7 +35,7 @@ export function WakuPolling({ appName, signer }: WakuPollingProps) {
           }}
         >
           Connect to vote
-        </CreatePollButton>
+        </CreateButton>
       )}
       {selectConnect && (
         <Modal heading="Connect" setShowModal={setSelectConnect}>
@@ -48,7 +48,7 @@ export function WakuPolling({ appName, signer }: WakuPollingProps) {
   )
 }
 
-const CreatePollButton = styled(Button)`
+const CreateButton = styled(Button)`
   width: 343px;
   background-color: #ffb571;
   color: #ffffff;
