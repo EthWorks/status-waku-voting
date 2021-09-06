@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
-import { Button } from '@status-waku-voting/react-components'
+import { VoteBtnAgainst, VoteBtnFor } from '../Buttons'
 
 // interface ProposalVoteProps {
 //     room: DetailedVotingRoom
@@ -88,24 +88,4 @@ export const VotesBtns = styled.div`
   @media (max-width: 600px) {
     margin-top: 24px;
   }
-`
-export const VoteBtn = styled(Button)`
-  width: 44%;
-  padding: 11px 0;
-  font-weight: 500;
-  line-height: 22px;
-  text-align: center;
-
-  @media (max-width: 768px) {
-    width: 48%;
-  }
-`
-
-export const VoteBtnAgainst = styled(VoteBtn)`
-  background-color: #ffeded;
-  color: #c90a0a;
-`
-export const VoteBtnFor = styled(VoteBtn)`
-  background-color: #edfff4;
-  color: #1d920a;
 `
