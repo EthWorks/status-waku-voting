@@ -67,3 +67,26 @@ export const VoteSendingBtn = styled(Btn)`
     color: #676868;
   }
 `
+
+export const FinalBtn = styled(Btn)`
+  width: 100%;
+  background: #edf1ff;
+  color: #0f3595;
+
+  &:not(:disabled):hover {
+    background: #dbeeff;
+  }
+
+  &:not(:disabled):active {
+    background: #f7f9ff;
+  }
+
+  &:disabled {
+    background: #f3f3f3;
+    color: #939ba1;
+  }
+
+  @media (max-width: 600px) {
+    margin-top: 32px;
+  }
+`

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
-import { VoteBtnAgainst, VoteBtnFor } from '../Buttons'
+import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
 import { VoteSubmitButton } from './VoteSubmitButton'
 import { VoteChart } from './VoteChart'
 
@@ -14,9 +14,6 @@ interface ProposalVoteProps {
 export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
-  // const [showConfirmModal, setShowConfirmModal] = useState(false)
-  // const [proposingAmount, setProposingAmount] = useState(0)
-  // const [selectedVoted, setSelectedVoted] = useState(voteTypes['Add'].for)
 
   return (
     <Card>
@@ -24,38 +21,14 @@ export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVo
 
       <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={48} />
 
-      {/* 
-      {winner ? (
-        <VoteBtnFinal disabled={!account}>
-          Finalize the vote
-        </VoteBtnFinal>
+      {voteWinner ? (
+        <FinalBtn disabled={!account}>Finalize the vote</FinalBtn>
       ) : (
         <VotesBtns>
-          <VoteBtn
-            disabled={!account}
-            onClick={() => {
-              setSelectedVoted(voteConstants.against)
-              setShowVoteModal(true)
-            }}
-          >
-            Vote Against
-          </VoteBtn>
-          <VoteBtn
-            disabled={!account}
-            onClick={() => {
-              setSelectedVoted(voteConstants.for)
-              setShowVoteModal(true)
-            }}
-          >
-           Vote For
-          </VoteBtn>
+          <VoteBtnAgainst disabled={!account}>Vote Against</VoteBtnAgainst>
+          <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
         </VotesBtns>
-      )} */}
-
-      <VotesBtns>
-        <VoteBtnAgainst disabled={!account}>Vote Against</VoteBtnAgainst>
-        <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
-      </VotesBtns>
+      )}
 
       <CardVoteBottom>{vote && <VoteSubmitButton votes={vote} disabled={!account} />}</CardVoteBottom>
     </Card>
