@@ -48,3 +48,16 @@ export const VoteBtnFor = styled(VoteBtn)`
   &:not(:disabled):active {
     background: #F3FFF8;
 `
+export const VoteSendingBtn = styled(Btn)`
+  margin-top: 24px;
+  color: #0f3595;
+  height: auto;
+  background: transparent;
+
+  &:hover {
+    color: #5d7be2;
+  }
+  &:active {
+    color: #0f3595;
+  }
+`

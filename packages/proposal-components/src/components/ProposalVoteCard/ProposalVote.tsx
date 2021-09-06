@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { VoteBtnAgainst, VoteBtnFor } from '../Buttons'
+import { VoteSubmitButton } from './VoteSubmitButton'
 
-// interface ProposalVoteProps {
-//     room: DetailedVotingRoom
-//     hideModalFunction?: (val: boolean) => void
-//   }
+interface ProposalVoteProps {
+  vote: number
+  hideModalFunction?: (val: boolean) => void
+}
 
-export function ProposalVote() {
+export function ProposalVote({ vote, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
   // const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -51,7 +52,7 @@ export function ProposalVote() {
         <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
       </VotesBtns>
 
-      {/* <VoteSubmitButton vote={vote} /> */}
+      <CardVoteBottom>{vote && <VoteSubmitButton votes={vote} />}</CardVoteBottom>
     </Card>
   )
 }
@@ -88,4 +89,10 @@ export const VotesBtns = styled.div`
   @media (max-width: 600px) {
     margin-top: 24px;
   }
+`
+
+const CardVoteBottom = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `
