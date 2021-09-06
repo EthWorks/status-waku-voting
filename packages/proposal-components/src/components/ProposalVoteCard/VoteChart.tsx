@@ -3,7 +3,6 @@ import CountUp from 'react-countup'
 import styled from 'styled-components'
 import { addCommas } from '../../helpers/addCommas'
 import { formatTimeLeft } from '../../helpers/fomatTimeLeft'
-import { VoteType } from './../../constants/voteTypes'
 import { VoteGraphBar } from './VoteGraphBar'
 import crossIcon from '../../assets/svg/cross.svg'
 import crossWinnerIcon from '../../assets/svg/crossWinner.svg'
@@ -16,7 +15,7 @@ export interface VoteChartProps {
   timeLeft: number
   voteWinner?: number
   proposingAmount?: number
-  selectedVote?: VoteType
+  selectedVote?: number
   isAnimation?: boolean
   tabletMode?: (val: boolean) => void
 }
@@ -53,7 +52,7 @@ export function VoteChart({
 
   if (proposingAmount && selectedVote) {
     balanceWidth =
-      selectedVote.type === 0
+      selectedVote === 0
         ? (100 * (votesAgainst + proposingAmount)) / (voteSum + proposingAmount)
         : (100 * votesAgainst) / (voteSum + proposingAmount)
   }
@@ -70,7 +69,7 @@ export function VoteChart({
           <VoteIcon src={voteWinner === 1 ? crossWinnerIcon : crossIcon} width={voteWinner === 1 ? '18px' : '14px'} />
           <span>
             {' '}
-            {isAnimation && proposingAmount && selectedVote && selectedVote.type === 0 ? (
+            {isAnimation && proposingAmount && selectedVote && selectedVote === 0 ? (
               <CountUp end={votesAgainst + proposingAmount} separator="," />
             ) : (
               addCommas(votesAgainst)
@@ -88,7 +87,7 @@ export function VoteChart({
           <VoteIcon src={voteWinner === 2 ? checkWinnerIcon : checkIcon} width={voteWinner === 2 ? '24px' : '18px'} />
           <span>
             {' '}
-            {isAnimation && proposingAmount && selectedVote && selectedVote.type === 1 ? (
+            {isAnimation && proposingAmount && selectedVote && selectedVote === 1 ? (
               <CountUp end={votesFor + proposingAmount} separator="," />
             ) : (
               addCommas(votesFor)
