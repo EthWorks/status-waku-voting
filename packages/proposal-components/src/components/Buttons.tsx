@@ -15,6 +15,11 @@ export const VoteBtn = styled(Btn)`
   line-height: 22px;
   text-align: center;
 
+  &:disabled {
+    background: #f3f3f3;
+    color: #939ba1;
+  }
+
   @media (max-width: 768px) {
     width: 48%;
   }
@@ -23,8 +28,23 @@ export const VoteBtn = styled(Btn)`
 export const VoteBtnAgainst = styled(VoteBtn)`
   background-color: #ffeded;
   color: #c90a0a;
+
+  &:not(:disabled):hover {
+    background: #ffdada;
+  }
+
+  &:not(:disabled):active {
+    background: #fff5f5;
+  }
 `
 export const VoteBtnFor = styled(VoteBtn)`
   background-color: #edfff4;
   color: #1d920a;
+
+  &:not(:disabled):hover {
+    background: #ccfee0;
+  }
+
+  &:not(:disabled):active {
+    background: #F3FFF8;
 `
