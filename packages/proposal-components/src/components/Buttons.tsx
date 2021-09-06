@@ -50,6 +50,7 @@ export const VoteBtnFor = styled(VoteBtn)`
 `
 export const VoteSendingBtn = styled(Btn)`
   margin-top: 24px;
+  padding: 0;
   color: #0f3595;
   height: auto;
   background: transparent;

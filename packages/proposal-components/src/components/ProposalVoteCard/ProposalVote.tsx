@@ -3,13 +3,15 @@ import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { VoteBtnAgainst, VoteBtnFor } from '../Buttons'
 import { VoteSubmitButton } from './VoteSubmitButton'
+import { VoteChart } from './VoteChart'
 
 interface ProposalVoteProps {
   vote: number
+  voteWinner?: number
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalVote({ vote, hideModalFunction }: ProposalVoteProps) {
+export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
   // const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -18,7 +20,10 @@ export function ProposalVote({ vote, hideModalFunction }: ProposalVoteProps) {
 
   return (
     <Card>
-      {/* <VoteChart /> */}
+      {voteWinner ? <CardHeading>Proposal {voteWinner == 1 ? 'rejected' : 'passed'}</CardHeading> : <CardHeading />}
+
+      <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={48} />
+
       {/* 
       {winner ? (
         <VoteBtnFinal disabled={!account}>
@@ -81,6 +86,16 @@ export const Card = styled.div`
     border-bottom: none;
   }
 `
+
+export const CardHeading = styled.h2`
+  height: 24px;
+  font-weight: bold;
+  font-size: 17px;
+  line-height: 24px;
+  margin: 0;
+  margin-bottom: 15px;
+`
+
 export const VotesBtns = styled.div`
   display: flex;
   justify-content: space-between;
