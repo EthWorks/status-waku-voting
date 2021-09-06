@@ -52,7 +52,7 @@ export function ProposalVote({ vote, hideModalFunction }: ProposalVoteProps) {
         <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
       </VotesBtns>
 
-      <CardVoteBottom>{vote && <VoteSubmitButton votes={vote} />}</CardVoteBottom>
+      <CardVoteBottom>{vote && <VoteSubmitButton votes={vote} disabled={!account} />}</CardVoteBottom>
     </Card>
   )
 }

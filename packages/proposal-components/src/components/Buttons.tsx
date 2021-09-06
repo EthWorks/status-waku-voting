@@ -57,7 +57,12 @@ export const VoteSendingBtn = styled(Btn)`
   &:hover {
     color: #5d7be2;
   }
+
   &:active {
     color: #0f3595;
+  }
+
+  &:disabled {
+    color: #676868;
   }
 `
