@@ -19,7 +19,7 @@ export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVo
     <Card>
       {voteWinner ? <CardHeading>Proposal {voteWinner == 1 ? 'rejected' : 'passed'}</CardHeading> : <CardHeading />}
 
-      <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={48} />
+      <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={48} voteWinner={2} />
 
       {voteWinner ? (
         <FinalBtn disabled={!account}>Finalize the vote</FinalBtn>

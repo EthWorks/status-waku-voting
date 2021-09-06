@@ -52,7 +52,7 @@ const VoteGraph = styled.div<VoteGraphBarProps>`
   background-color: ${({ theme }) => (theme.voteWinner === 1 ? '#f1f2f5' : '#edfff4')};
   border-radius: 10px;
   padding-top: 5px;
-  border-left: 13px solid ${({ theme }) => (theme.voteWinner === 0 ? '#f1f2f5' : '#ffeded')};
+  border-left: 13px solid ${({ theme }) => (theme.voteWinner === 2 ? '#f1f2f5' : '#ffeded')};
   border-right: 13px solid ${({ theme }) => (theme.voteWinner === 1 ? '#f1f2f5' : '#edfff4')};
 
   @media (max-width: 600px) {

@@ -13,7 +13,7 @@ export function ProposalCard() {
         }
         address={'#'}
       />
-      <ProposalVote vote={2345678} />
+      <ProposalVote vote={2345678} voteWinner={2} />
     </Card>
   )
 }

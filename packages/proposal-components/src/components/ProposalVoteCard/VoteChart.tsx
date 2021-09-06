@@ -85,7 +85,7 @@ export function VoteChart({
             alignItems: mobileVersion ? 'flex-start' : 'center',
           }}
         >
-          <VoteIcon src={voteWinner === 2 ? checkWinnerIcon : checkIcon} width={voteWinner === 1 ? '18px' : '14px'} />
+          <VoteIcon src={voteWinner === 2 ? checkWinnerIcon : checkIcon} width={voteWinner === 2 ? '24px' : '18px'} />
           <span>
             {' '}
             {isAnimation && proposingAmount && selectedVote && selectedVote.type === 1 ? (
@@ -124,7 +124,7 @@ const Votes = styled.div`
 const VotesChart = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   position: relative;
   margin-bottom: 13px;
 
@@ -138,6 +138,7 @@ const VotesChart = styled.div`
 const VoteBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-content: center;
   font-size: 12px;
   text-align: center;
