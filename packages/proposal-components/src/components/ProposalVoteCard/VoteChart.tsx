@@ -77,7 +77,7 @@ export function VoteChart({
             <span style={{ fontWeight: 'normal' }}>ABC</span>
           </span>
         </VoteBox>
-        <TimeLeft className={selectedVote ? '' : 'notModal'}>{formatTimeLeft(timeLeft)}</TimeLeft>
+        {!voteWinner && <TimeLeft className={selectedVote ? '' : 'notModal'}>{formatTimeLeft(timeLeft)}</TimeLeft>}
         <VoteBox
           style={{
             filter: voteWinner && voteWinner === 1 ? 'grayscale(1)' : 'none',
@@ -115,6 +115,10 @@ const Votes = styled.div`
   margin-bottom: 32px;
   width: 100%;
   position: relative;
+
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
 
   @media (max-width: 600px) {
     margin-bottom: 0;

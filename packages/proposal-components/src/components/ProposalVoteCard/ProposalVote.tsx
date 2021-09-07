@@ -4,14 +4,16 @@ import { useEthers } from '@usedapp/core'
 import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
 import { VoteSubmitButton } from './VoteSubmitButton'
 import { VoteChart } from './VoteChart'
+import { ViewLink } from '../ViewLink'
 
 interface ProposalVoteProps {
-  vote: number
+  vote?: number
   voteWinner?: number
+  address: string
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVoteProps) {
+export function ProposalVote({ vote, voteWinner, address, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
 
@@ -19,7 +21,7 @@ export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVo
     <Card>
       {voteWinner ? <CardHeading>Proposal {voteWinner == 1 ? 'rejected' : 'passed'}</CardHeading> : <CardHeading />}
 
-      <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={48} voteWinner={2} />
+      <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={4855555577} voteWinner={voteWinner} />
 
       {voteWinner ? (
         <FinalBtn disabled={!account}>Finalize the vote</FinalBtn>
@@ -30,7 +32,13 @@ export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVo
         </VotesBtns>
       )}
 
-      <CardVoteBottom>{vote && <VoteSubmitButton votes={vote} disabled={!account} />}</CardVoteBottom>
+      <CardVoteBottom>
+        <CardViewLink>
+          {' '}
+          <ViewLink address={address} />
+        </CardViewLink>
+        {vote && <VoteSubmitButton votes={vote} disabled={!account} />}
+      </CardVoteBottom>
     </Card>
   )
 }
@@ -38,6 +46,7 @@ export function ProposalVote({ vote, voteWinner, hideModalFunction }: ProposalVo
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   width: 50%;
   padding: 24px;
@@ -50,7 +59,7 @@ export const Card = styled.div`
     box-shadow: none;
     border-radius: unset;
     background-color: unset;
-    padding-bottom: 0;
+    padding-top: 0;
   }
 
   @media (max-width: 600px) {
@@ -67,6 +76,10 @@ export const CardHeading = styled.h2`
   line-height: 24px;
   margin: 0;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0;
+  }
 `
 
 export const VotesBtns = styled.div`
@@ -83,4 +96,17 @@ const CardVoteBottom = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
+  margin-top: 24px;
+
+  @media (max-width: 768px) {
+    justify-content: space-between;
+  }
+`
+const CardViewLink = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
 `

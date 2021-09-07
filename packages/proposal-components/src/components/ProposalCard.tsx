@@ -16,7 +16,7 @@ export function ProposalCard({ heading, text, address, vote, voteWinner }: Propo
   return (
     <Card>
       <ProposalInfo heading={heading} text={text} address={address} />
-      <ProposalVote vote={vote} voteWinner={voteWinner} />
+      <ProposalVote vote={vote} voteWinner={voteWinner} address={address} />
     </Card>
   )
 }
@@ -24,12 +24,10 @@ export function ProposalCard({ heading, text, address, vote, voteWinner }: Propo
 export const Card = styled.div`
   display: flex;
   align-items: stretch;
-  margin-top: 24px;
+  margin-bottom: 24px;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    margin-top: 0;
-    padding: 16px 0 32px;
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
   }
 

@@ -30,8 +30,4 @@ const List = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  @media (max-width: 768px) {
-    margin-top: -24px;
-  }
 `
