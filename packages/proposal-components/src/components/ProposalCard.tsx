@@ -3,17 +3,20 @@ import styled from 'styled-components'
 import { ProposalInfo } from './ProposalInfo'
 import { ProposalVote } from './ProposalVoteCard/ProposalVote'
 
-export function ProposalCard() {
+interface ProposalCardProps {
+  heading: string
+  text: string
+  address: string
+  vote?: number
+  voteWinner?: number
+  hideModalFunction?: (val: boolean) => void
+}
+
+export function ProposalCard({ heading, text, address, vote, voteWinner }: ProposalCardProps) {
   return (
     <Card>
-      <ProposalInfo
-        heading={'This is a very long, explainative and sophisticated title for a proposal.'}
-        text={
-          'This is a longer description of the proposal. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero, non volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero.'
-        }
-        address={'#'}
-      />
-      <ProposalVote vote={2345678} voteWinner={2} />
+      <ProposalInfo heading={heading} text={text} address={address} />
+      <ProposalVote vote={vote} voteWinner={voteWinner} />
     </Card>
   )
 }
@@ -27,11 +30,13 @@ export const Card = styled.div`
     flex-direction: column;
     margin-top: 0;
     padding: 16px 0 32px;
-    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
   }
+
   @media (max-width: 600px) {
     padding-bottom: 16px;
   }
+
   &:not:first-child {
     @media (max-width: 768px) {
       border-top: 1px solid #e0e0e0;
