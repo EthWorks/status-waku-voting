@@ -5,31 +5,98 @@ import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
 import { VoteSubmitButton } from './VoteSubmitButton'
 import { VoteChart } from './VoteChart'
 import { ViewLink } from '../ViewLink'
+import { Modal } from '@status-waku-voting/react-components'
+import { VoteModal } from '../VoteModal'
+import { VoteAnimatedModal } from '../VoteAnimatedModal'
 
 interface ProposalVoteProps {
   vote?: number
   voteWinner?: number
+  heading: string
   address: string
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalVote({ vote, voteWinner, address, hideModalFunction }: ProposalVoteProps) {
+export function ProposalVote({ vote, voteWinner, address, heading, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [proposingAmount, setProposingAmount] = useState(0)
+  const [selectedVoted, setSelectedVoted] = useState(0)
+
+  const setNext = (val: boolean) => {
+    setShowConfirmModal(val)
+    setShowVoteModal(false)
+  }
+
+  const hideConfirm = (val: boolean) => {
+    if (hideModalFunction) {
+      hideModalFunction(false)
+    }
+    setShowConfirmModal(val)
+  }
 
   return (
     <Card>
+      {showVoteModal && (
+        <Modal heading={heading} setShowModal={setShowVoteModal}>
+          <VoteModal
+            votesFor={1865567}
+            votesAgainst={1740235}
+            timeLeft={4855555577}
+            availableAmount={65245346}
+            selectedVote={selectedVoted}
+            proposingAmount={proposingAmount}
+            setShowConfirmModal={setNext}
+            setProposingAmount={setProposingAmount}
+          />{' '}
+        </Modal>
+      )}
+      {showConfirmModal && (
+        <Modal heading={heading} setShowModal={hideConfirm}>
+          <VoteAnimatedModal
+            votesFor={1865567}
+            votesAgainst={1740235}
+            timeLeft={4855555577}
+            selectedVote={selectedVoted}
+            setShowModal={hideConfirm}
+            proposingAmount={proposingAmount}
+          />
+        </Modal>
+      )}
       {voteWinner ? <CardHeading>Proposal {voteWinner == 1 ? 'rejected' : 'passed'}</CardHeading> : <CardHeading />}
 
-      <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={4855555577} voteWinner={voteWinner} />
+      <VoteChart
+        votesFor={1865567}
+        votesAgainst={1740235}
+        timeLeft={4855555577}
+        voteWinner={voteWinner}
+        selectedVote={selectedVoted}
+      />
 
       <CardButtons>
         {voteWinner ? (
           <FinalBtn disabled={!account}>Finalize the vote</FinalBtn>
         ) : (
           <VotesBtns>
-            <VoteBtnAgainst disabled={!account}>Vote Against</VoteBtnAgainst>
-            <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
+            <VoteBtnAgainst
+              disabled={!account}
+              onClick={() => {
+                setSelectedVoted(0)
+                setShowVoteModal(true)
+              }}
+            >
+              Vote Against
+            </VoteBtnAgainst>
+            <VoteBtnFor
+              disabled={!account}
+              onClick={() => {
+                setSelectedVoted(1)
+                setShowVoteModal(true)
+              }}
+            >
+              Vote For
+            </VoteBtnFor>
           </VotesBtns>
         )}
       </CardButtons>

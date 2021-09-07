@@ -16,7 +16,7 @@ export function ProposalCard({ heading, text, address, vote, voteWinner }: Propo
   return (
     <Card>
       <ProposalInfo heading={heading} text={text} address={address} />
-      <ProposalVote vote={vote} voteWinner={voteWinner} address={address} />
+      <ProposalVote vote={vote} voteWinner={voteWinner} address={address} heading={heading} />
     </Card>
   )
 }
