@@ -32,7 +32,9 @@ export const Card = styled.div`
   }
 
   @media (max-width: 600px) {
-    padding-bottom: 16px;
+    padding-bottom: 24px;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   }
 
   &:not:first-child {

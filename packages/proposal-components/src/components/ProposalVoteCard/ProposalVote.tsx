@@ -23,14 +23,16 @@ export function ProposalVote({ vote, voteWinner, address, hideModalFunction }: P
 
       <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={4855555577} voteWinner={voteWinner} />
 
-      {voteWinner ? (
-        <FinalBtn disabled={!account}>Finalize the vote</FinalBtn>
-      ) : (
-        <VotesBtns>
-          <VoteBtnAgainst disabled={!account}>Vote Against</VoteBtnAgainst>
-          <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
-        </VotesBtns>
-      )}
+      <CardButtons>
+        {voteWinner ? (
+          <FinalBtn disabled={!account}>Finalize the vote</FinalBtn>
+        ) : (
+          <VotesBtns>
+            <VoteBtnAgainst disabled={!account}>Vote Against</VoteBtnAgainst>
+            <VoteBtnFor disabled={!account}>Vote For</VoteBtnFor>
+          </VotesBtns>
+        )}
+      </CardButtons>
 
       <CardVoteBottom>
         <CardViewLink>
@@ -64,7 +66,7 @@ export const Card = styled.div`
 
   @media (max-width: 600px) {
     flex-direction: column;
-    padding: 16px 0 0;
+    padding: 0;
     border-bottom: none;
   }
 `
@@ -78,7 +80,21 @@ export const CardHeading = styled.h2`
   margin-bottom: 15px;
 
   @media (max-width: 768px) {
-    margin-bottom: 0;
+    font-size: 15px;
+    line-height: 22px;
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+`
+
+const CardButtons = styled.div`
+  width: 100%;
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `
 
@@ -101,6 +117,10 @@ const CardVoteBottom = styled.div`
 
   @media (max-width: 768px) {
     justify-content: space-between;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `
 const CardViewLink = styled.div`

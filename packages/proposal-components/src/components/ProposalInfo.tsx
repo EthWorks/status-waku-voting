@@ -49,12 +49,25 @@ const CardHeading = styled.div`
   line-height: 24px;
   margin-bottom: 8px;
   align-self: flex-start;
+
+  @media (max-width: 600px) {
+    font-size: 17px;
+  }
 `
 
 const CardText = styled.div`
   font-size: 13px;
   line-height: 18px;
   margin-bottom: 16px;
+
+  @media (max-width: 600px) {
+    height: 56px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 `
 
 const CardViewLink = styled.div`
