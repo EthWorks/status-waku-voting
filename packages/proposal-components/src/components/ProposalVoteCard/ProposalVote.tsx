@@ -5,11 +5,12 @@ import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
 import { VoteSubmitButton } from './VoteSubmitButton'
 import { VoteChart } from './VoteChart'
 import { ViewLink } from '../ViewLink'
-import { Modal } from '@status-waku-voting/react-components'
+import { Modal, Theme } from '@status-waku-voting/react-components'
 import { VoteModal } from '../VoteModal'
 import { VoteAnimatedModal } from '../VoteAnimatedModal'
 
 interface ProposalVoteProps {
+  theme: Theme
   vote?: number
   voteWinner?: number
   heading: string
@@ -17,7 +18,7 @@ interface ProposalVoteProps {
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalVote({ vote, voteWinner, address, heading, hideModalFunction }: ProposalVoteProps) {
+export function ProposalVote({ vote, voteWinner, address, heading, theme, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -39,7 +40,7 @@ export function ProposalVote({ vote, voteWinner, address, heading, hideModalFunc
   return (
     <Card>
       {showVoteModal && (
-        <Modal heading={heading} setShowModal={setShowVoteModal}>
+        <Modal heading={heading} setShowModal={setShowVoteModal} theme={theme}>
           <VoteModal
             votesFor={1865567}
             votesAgainst={1740235}
@@ -53,7 +54,7 @@ export function ProposalVote({ vote, voteWinner, address, heading, hideModalFunc
         </Modal>
       )}
       {showConfirmModal && (
-        <Modal heading={heading} setShowModal={hideConfirm}>
+        <Modal heading={heading} setShowModal={hideConfirm} theme={theme}>
           <VoteAnimatedModal
             votesFor={1865567}
             votesAgainst={1740235}
