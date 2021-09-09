@@ -21,9 +21,11 @@ export function ProposeModal({
   setTitle,
   setText,
 }: ProposeModalProps) {
+  const insufficientFunds = availableAmount < 10000
+
   return (
     <ProposingData>
-      {availableAmount < 10000 && (
+      {insufficientFunds && (
         <ProposingInfo>
           <span>⚠️</span>
           <InfoText>You need at least 10,000 ABC to create a proposal!</InfoText>
@@ -56,7 +58,11 @@ export function ProposeModal({
         />
       </Label>
 
-      <ProposingBtn disabled={!text || !title} theme={blueTheme} onClick={() => setShowProposeVoteModal(true)}>
+      <ProposingBtn
+        disabled={!text || !title || insufficientFunds}
+        theme={blueTheme}
+        onClick={() => setShowProposeVoteModal(true)}
+      >
         Continue
       </ProposingBtn>
     </ProposingData>
@@ -80,9 +86,13 @@ export const ProposingData = styled.div`
 `
 
 export const ProposingInfo = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 32px;
+  background: #ffeff2;
 
   @media (max-width: 600px) {
     max-width: 525px;
@@ -91,7 +101,7 @@ export const ProposingInfo = styled.div`
   & > span {
     font-size: 24px;
     line-height: 32px;
-    margin-right: 16px;
+    margin-right: 24px;
   }
 `
 

@@ -53,7 +53,7 @@ export function VotingEmpty({ theme }: VotingEmptyProps) {
             text={text}
             setText={setText}
             setTitle={setTitle}
-            availableAmount={65245346}
+            availableAmount={6524}
             setShowProposeVoteModal={setNext}
           />
         </Modal>
@@ -63,7 +63,7 @@ export function VotingEmpty({ theme }: VotingEmptyProps) {
           <ProposeVoteModal
             title={title}
             text={text}
-            availableAmount={65245346}
+            availableAmount={6524}
             setShowModal={setShowProposeVoteModal}
             setText={setText}
             setTitle={setTitle}
