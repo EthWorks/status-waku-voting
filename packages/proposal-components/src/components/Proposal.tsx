@@ -8,8 +8,8 @@ import { VotingEmpty } from './VotingEmpty'
 export function Proposal() {
   return (
     <ProposalWrapper>
-      {/* <ProposalHeader theme={blueTheme} />
-      <ProposalList theme={blueTheme} /> */}
+      {/* <ProposalHeader theme={blueTheme} /> */}
+      {/* <ProposalList theme={blueTheme} /> */}
       <VotingEmpty theme={blueTheme} />
     </ProposalWrapper>
   )
@@ -19,11 +19,12 @@ const ProposalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   max-width: 1000px;
-  // position: relative;
   margin: 0 auto;
   padding: 150px 32px 50px;
   width: 100%;
+  min-height: 100vh;
 
   @media (max-width: 600px) {
     padding: 132px 16px 32px;
