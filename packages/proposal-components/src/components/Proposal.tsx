@@ -25,7 +25,6 @@ const ProposalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   max-width: 1000px;
   margin: 0 auto;
   padding: 150px 32px 50px;
