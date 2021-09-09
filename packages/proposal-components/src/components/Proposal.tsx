@@ -3,12 +3,14 @@ import styled from 'styled-components'
 import { ProposalHeader } from './ProposalHeader'
 import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 import { ProposalList } from './ProposalList'
+import { VotingEmpty } from './VotingEmpty'
 
 export function Proposal() {
   return (
     <ProposalWrapper>
-      <ProposalHeader theme={blueTheme} />
-      <ProposalList theme={blueTheme} />
+      {/* <ProposalHeader theme={blueTheme} />
+      <ProposalList theme={blueTheme} /> */}
+      <VotingEmpty theme={blueTheme} />
     </ProposalWrapper>
   )
 }
@@ -18,7 +20,7 @@ const ProposalWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 1000px;
-  position: relative;
+  // position: relative;
   margin: 0 auto;
   padding: 150px 32px 50px;
   width: 100%;
