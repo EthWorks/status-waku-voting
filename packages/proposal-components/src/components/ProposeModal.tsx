@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { ProposingBtn } from './Buttons'
-import { Input } from './Input'
+import { TextArea } from './Input'
 import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 
 interface ProposeModalProps {
@@ -32,24 +32,27 @@ export function ProposeModal({
       <Label>
         Title
         <ProposingInput
-          type="text"
+          cols={2}
+          maxLength={90}
           placeholder="E.g. Change the rate of the token issuance"
           value={title}
           onInput={(e) => {
             setTitle(e.currentTarget.value)
           }}
+          required
         />
       </Label>
 
       <Label>
         Description
         <ProposingTextInput
-          type="text"
+          maxLength={440}
           placeholder="Describe your proposal as detailed as you can in 440 characters."
           value={text}
           onInput={(e) => {
             setText(e.currentTarget.value)
           }}
+          required
         />
       </Label>
 
@@ -98,30 +101,11 @@ const InfoText = styled.div`
   letter-spacing: 0.1px;
 `
 
-const ProposingInput = styled(Input)`
-  width: 100%;
-  padding: 11px 20px;
-  margin-bottom: 32px;
-  margin-top: 10px;
-  font-size: 15px;
-  line-height: 22px;
-  height: 66px;
-  text-align: left;
-
-  &::-webkit-input-placeholder {
-    white-space: pre-line;
-  }
-
-  &::-moz-placeholder {
-    white-space: pre-line;
-  }
-
-  &::-ms-input-placeholder {
-    white-space: pre-line;
-  }
+const ProposingInput = styled(TextArea)`
+  height: 68px;
 `
 const ProposingTextInput = styled(ProposingInput)`
-  height: 220px;
+  height: 222px;
 `
 const Label = styled.label`
   width: 100%;
