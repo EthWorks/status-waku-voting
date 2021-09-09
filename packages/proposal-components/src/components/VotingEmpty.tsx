@@ -39,7 +39,7 @@ export function VotingEmpty({ theme }: VotingEmptyProps) {
             text={text}
             setText={setText}
             setTitle={setTitle}
-            availableAmount={6524}
+            availableAmount={6524354}
             setShowProposeVoteModal={setNext}
           />
         </Modal>
@@ -49,7 +49,7 @@ export function VotingEmpty({ theme }: VotingEmptyProps) {
           <ProposeVoteModal
             title={title}
             text={text}
-            availableAmount={6524}
+            availableAmount={6524354}
             setShowModal={setShowProposeVoteModal}
             setText={setText}
             setTitle={setTitle}
@@ -90,7 +90,7 @@ const VotingEmptyWrap = styled.div`
   justify-content: center;
   align-items: center;
   background: #fff;
-  margin-bottom: 150px;
+  margin-top: 20vh;
   padding: 0 32px;
 
   @media (max-width: 600px) {
