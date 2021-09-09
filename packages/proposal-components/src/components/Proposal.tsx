@@ -15,6 +15,7 @@ export function Proposal({ wakuVoting }: ProposalProps) {
     <ProposalWrapper>
       <ProposalHeader theme={blueTheme} wakuVoting={wakuVoting} />
       <ProposalList theme={blueTheme} wakuVoting={wakuVoting} />
+      {/* <VotingEmpty theme={blueTheme} /> */}
       <NotificationItem text={'Proposal you finalized will be settled after 10 confirmations.'} address={'#'} />
     </ProposalWrapper>
   )
@@ -24,6 +25,7 @@ const ProposalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   max-width: 1000px;
   margin: 0 auto;
   padding: 150px 32px 50px;
