@@ -49,7 +49,6 @@ export function VoteModal({
       {!funds && <DisabledButton>Not enought ABC to vote</DisabledButton>}
 
       {funds &&
-        selectedVote &&
         (selectedVote === 0 ? (
           <ModalVoteBtnAgainst disabled={disabled} onClick={() => setShowConfirmModal(true)}>
             Vote Against
