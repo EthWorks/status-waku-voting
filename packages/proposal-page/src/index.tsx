@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { useTest } from '@status-waku-voting/proposal-hooks'
 import { Proposal } from '@status-waku-voting/proposal-components'
 import { TopBar, GlobalStyle } from '@status-waku-voting/react-components'
@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 import { DAppProvider, ChainId, useEthers } from '@usedapp/core'
 import { DEFAULT_CONFIG } from '@usedapp/core/dist/cjs/src/model/config/default'
+import {WakuVoting} from '@status-waku-voting/core'
+import { Provider } from '@ethersproject/providers'
 
 const config = {
   readOnlyChainId: ChainId.Ropsten,
@@ -26,6 +28,17 @@ const config = {
 
 function Proposals() {
   const { account, library, activateBrowserWallet, deactivate } = useEthers()
+  const [ waku , setWaku ] = useState<WakuVoting | undefined>(undefined)
+  
+  useEffect(() =>{
+
+    const a = async() => {
+      const wak = await WakuVoting.create('test', '0x5795A64A70cde4073DBa9EEBC5C6b675B15C815a', library as unknown as Provider, '0x53c43764255c17bd724f74c4ef150724ac50a3ed')
+      setWaku(wak)
+    }
+    a()
+  },[library])
+  
   return (
     <Wrapper>
       <TopBar
@@ -36,7 +49,7 @@ function Proposals() {
         account={account}
         deactivate={deactivate}
       />
-      <Proposal />
+      {waku && <Proposal wakuVoting={waku}/>}
     </Wrapper>
   )
 }

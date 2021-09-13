@@ -23,7 +23,7 @@ declare module 'protons' {
         signature: Uint8Array
     }
 
-    export type ProposalVote = {
+    export type Vote = {
         voter: Uint8Array
         timestamp:number
         answer: number
@@ -41,9 +41,9 @@ declare module 'protons' {
             encode: (timedPollVote: TimedPollVote) => Uint8Array,
             decode: (payload: Uint8Array | undefined) => TimedPollVote
         }
-        ProposalVote:{
-            encode: (proposalVote: ProposalVote) => Uint8Array,
-            decode: (payload: Uint8Array | undefined) => ProposalVote
+        Vote:{
+            encode: (vote: Vote) => Uint8Array,
+            decode: (payload: Uint8Array | undefined) => Vote
         }
     }
     export = protons

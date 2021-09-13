@@ -5,8 +5,13 @@ import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/sty
 import { ProposalList } from './ProposalList'
 import { VotingEmpty } from './VotingEmpty'
 import { NotificationItem } from './NotificationItem'
+import {WakuVoting} from '@status-waku-voting/core'
 
-export function Proposal() {
+type ProposalProps = {
+  wakuVoting: WakuVoting
+}
+
+export function Proposal({ wakuVoting }: ProposalProps) {
   return (
     <ProposalWrapper>
       <VotingEmpty theme={blueTheme} />

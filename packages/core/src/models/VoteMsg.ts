@@ -1,19 +1,20 @@
 import { utils } from 'ethers'
-import protons, { ProposalVote } from 'protons'
+import protons, { Vote } from 'protons'
 import { BigNumber, Wallet } from 'ethers'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { createSignFunction } from '../utils/createSignFunction'
+import { verifySignature } from '../utils/verifySignature'
+
 const proto = protons(`
-message ProposalVote {
+message Vote {
     bytes voter = 1; 
     int64 timestamp = 2;
-    int8 answer = 3;
-    bytes roomId = 4
+    int64 answer = 3;
+    bytes roomId = 4;
     bytes tokenAmount = 5;
     bytes signature = 6;
 }
 `)
-
 
 type Message = {
   roomIdAndType: string
@@ -51,7 +52,7 @@ export function createSignMsgParams(message: Message, chainId: number, verifying
   return msgParams
 }
 
-export class ProposalVoteMsg {
+export class VoteMsg {
   public roomId: number
   public voter: string
   public timestamp: number
@@ -79,14 +80,14 @@ export class ProposalVoteMsg {
     chainId: number,
     tokenAmount: BigNumber,
     contractAddress: string
-  ): Promise<ProposalVoteMsg | undefined> {
+  ): Promise<VoteMsg | undefined> {
     const signFunction = createSignFunction(signer)
     const voter = await signer.getAddress()
-    const msg = { roomIdAndType:BigNumber.from(roomId).mul(2).add(answer).toHexString(), tokenAmount:tokenAmount.toHexString(), voter }
+    const msg = { roomIdAndType: BigNumber.from(roomId).mul(2).add(answer).toHexString(), tokenAmount: tokenAmount.toHexString(), voter }
     const params = [msg.voter, JSON.stringify(createSignMsgParams(msg, chainId, contractAddress))]
     const signature = await signFunction(params)
     if (signature) {
-      return new ProposalVoteMsg(signature, roomId,voter,answer,tokenAmount,chainId, Date.now())
+      return new VoteMsg(signature, roomId, voter, answer, tokenAmount, chainId, Date.now())
     } else {
       return undefined
     }
@@ -94,7 +95,7 @@ export class ProposalVoteMsg {
 
   encode() {
     try {
-      const voteProto: ProposalVote = {
+      const voteProto: Vote = {
         voter: utils.arrayify(this.voter),
         timestamp: this.timestamp,
         answer: this.answer,
@@ -102,7 +103,7 @@ export class ProposalVoteMsg {
         roomId: utils.arrayify(BigNumber.from(this.roomId)),
         signature: utils.arrayify(this.signature),
       }
-      return proto.ProposalVote.encode(voteProto)
+      return proto.Vote.encode(voteProto)
     } catch {
       return undefined
     }
@@ -112,31 +113,37 @@ export class ProposalVoteMsg {
     rawPayload: Uint8Array | undefined,
     timestamp: Date | undefined,
     chainId: number,
+    contractAddress: string,
     verifyFunction?: (params: any, address: string) => boolean
   ) {
     try {
-      const payload = proto.TimedPollVote.decode(rawPayload)
+      const payload = proto.Vote.decode(rawPayload)
       if (!timestamp || !payload.timestamp || timestamp?.getTime() != payload.timestamp) {
         return undefined
       }
       const signature = utils.hexlify(payload.signature)
 
+
       const msg = {
-        pollId: utils.hexlify(payload.pollId),
-        answer: payload.answer,
-        voter: utils.getAddress(utils.hexlify(payload.voter)),
-        timestamp: payload.timestamp,
-        tokenAmount: payload.tokenAmount ? BigNumber.from(payload.tokenAmount) : undefined,
+        roomIdAndType: BigNumber.from(payload.roomId).mul(2).add(payload.answer).toHexString(),
+        tokenAmount: utils.hexlify(payload.tokenAmount),
+        voter: utils.getAddress(utils.hexlify(payload.voter))
       }
 
       const params = {
-        data: createSignMsgParams(msg, chainId),
+        data: createSignMsgParams(msg, chainId, contractAddress),
         sig: signature,
       }
       if (verifyFunction ? !verifyFunction : !verifySignature(params, msg.voter)) {
         return undefined
       }
-      return new TimedPollVoteMsg(signature, msg, chainId)
+      return new VoteMsg(signature,
+        BigNumber.from(payload.roomId).toNumber(),
+        utils.getAddress(utils.hexlify(payload.voter)),
+        payload.answer,
+        BigNumber.from(payload.tokenAmount),
+        chainId,
+        payload.timestamp)
     } catch {
       return undefined
     }
