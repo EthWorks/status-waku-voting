@@ -47,15 +47,15 @@ export function ProposalVoteMobile({
         address={'#'}
         mobileMode={mobileVersion}
       />
-
-      <VoteChart
-        votesFor={1865567}
-        votesAgainst={1740235}
-        timeLeft={4855555577}
-        voteWinner={2}
-        selectedVote={selectedVoted}
-      />
-
+      <VoteChartWrap>
+        <VoteChart
+          votesFor={1865567}
+          votesAgainst={1740235}
+          timeLeft={4855555577}
+          voteWinner={2}
+          selectedVote={selectedVoted}
+        />
+      </VoteChartWrap>
       {!voteWinner && (
         <VotePropose
           availableAmount={65245346}
@@ -103,20 +103,6 @@ export const Card = styled.div`
   @media (max-width: 425px) {
     padding-top: 118px;
   }
-
-  // @media (max-width: 768px) {
-  //   width: 100%;
-  //   box-shadow: none;
-  //   border-radius: unset;
-  //   background-color: unset;
-  //   padding-top: 0;
-  // }
-
-  // @media (max-width: 600px) {
-  //   flex-direction: column;
-  //   padding: 0;
-  //   border-bottom: none;
-  // }
 `
 
 const CardButtons = styled.div`
@@ -139,4 +125,9 @@ const CardVoteBottom = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 24px;
+`
+
+const VoteChartWrap = styled.div`
+  width: 100%;
+  margin-bottom: 32px;
 `

@@ -14,7 +14,7 @@ export function ProposalInfo({ heading, text, address, mobileMode }: ProposalInf
     <Card>
       <CardHeading>{heading}</CardHeading>
       <CardText className={mobileMode ? 'mobile' : ''}>{text}</CardText>
-      <CardViewLink>
+      <CardViewLink className={mobileMode ? 'mobile' : ''}>
         <ViewLink address={address} />
       </CardViewLink>
     </Card>
@@ -72,10 +72,11 @@ export const CardText = styled.div`
 
   &.mobile {
     @media (max-width: 600px) {
-      height: 56px;
-      overflow: auto;
+      height: 100%;
+      overflow: unset;
       text-overflow: unset;
       -webkit-line-clamp: unset;
+      margin-bottom: 24px;
     }
   }
 `
@@ -83,5 +84,12 @@ export const CardText = styled.div`
 const CardViewLink = styled.div`
   @media (max-width: 768px) {
     display: none;
+  }
+
+  &.mobile {
+    @media (max-width: 600px) {
+      display: block;
+      margin-bottom: 37px;
+    }
   }
 `
