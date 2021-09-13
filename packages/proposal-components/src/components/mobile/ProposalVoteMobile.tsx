@@ -49,13 +49,7 @@ export function ProposalVoteMobile({
         mobileMode={mobileVersion}
       />
       <VoteChartWrap>
-        <VoteChart
-          votesFor={1865567}
-          votesAgainst={1740235}
-          timeLeft={4855555577}
-          voteWinner={2}
-          selectedVote={selectedVoted}
-        />
+        <VoteChart votesFor={1865567} votesAgainst={1740235} timeLeft={4855555577} selectedVote={selectedVoted} />
       </VoteChartWrap>
       {!voteWinner && (
         <VotePropose
