@@ -110,7 +110,7 @@ export const ProposingBtn = styled(Btn)`
     filter: grayscale(1);
   }
 `
- 
+
 export const DisabledButton = styled(Btn)`
   width: 100%;
   background-color: #f3f3f3;

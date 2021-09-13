@@ -14,8 +14,8 @@ export function VotePropose({ availableAmount, proposingAmount, setProposingAmou
   const [displayAmount, setDisplayAmount] = useState(addCommas(proposingAmount) + ' ABC')
   const disabled = availableAmount === 0
   let step = 10 ** (Math.floor(Math.log10(availableAmount)) - 2)
-  
-if (availableAmount < 100) {
+
+  if (availableAmount < 100) {
     step = 1
   }
 

@@ -30,7 +30,6 @@ export function VoteModal({
   const disabled = proposingAmount === 0
   const funds = availableAmount > 0
 
-
   return (
     <Column>
       <VoteChart
@@ -59,7 +58,6 @@ export function VoteModal({
             Vote For
           </ModalVoteBtnFor>
         ))}
-
     </Column>
   )
 }
