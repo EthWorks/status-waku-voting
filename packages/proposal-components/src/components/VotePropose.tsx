@@ -15,6 +15,7 @@ export function VotePropose({ availableAmount, proposingAmount, setProposingAmou
   const disabled = availableAmount === 0
 
   let step = 10 ** (Math.floor(Math.log10(availableAmount)) - 2)
+
   if (availableAmount < 100) {
     step = 1
   }
