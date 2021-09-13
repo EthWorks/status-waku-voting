@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
@@ -8,9 +9,9 @@ import { ViewLink } from '../ViewLink'
 import { Modal, Theme } from '@status-waku-voting/react-components'
 import { VoteModal } from '../VoteModal'
 import { VoteAnimatedModal } from '../VoteAnimatedModal'
-import { ProposalVoteMobile } from '../mobile/ProposalVoteMobile'
 
 interface ProposalVoteProps {
+  id: string
   theme: Theme
   vote?: number
   voteWinner?: number
@@ -21,6 +22,7 @@ interface ProposalVoteProps {
 }
 
 export function ProposalVote({
+  id,
   vote,
   voteWinner,
   address,
@@ -34,6 +36,7 @@ export function ProposalVote({
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [proposingAmount, setProposingAmount] = useState(0)
   const [selectedVoted, setSelectedVoted] = useState(0)
+  const history = useHistory()
 
   const setNext = (val: boolean) => {
     setShowConfirmModal(val)
@@ -48,7 +51,7 @@ export function ProposalVote({
   }
 
   return (
-    <Card>
+    <Card onClick={() => history.push(`/votingRoom/${id}`)}>
       {showVoteModal && (
         <Modal heading={heading} setShowModal={setShowVoteModal} theme={theme}>
           <VoteModal

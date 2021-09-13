@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
@@ -30,25 +31,34 @@ export function ProposalVoteMobile({
   text,
   availableAmount,
 }: ProposalVoteMobileProps) {
+  const { id } = useParams<{ id: string }>()
   const { account } = useEthers()
   const [proposingAmount, setProposingAmount] = useState(0)
   const [selectedVoted, setSelectedVoted] = useState(0)
+  const [mobileVersion, setMobileVersion] = useState(true)
 
   return (
     <Card>
-      <ProposalInfo heading={heading} text={text} address={address} />
+      <ProposalInfo
+        heading={'This is a very long, explainative and sophisticated title for a proposal.'}
+        text={
+          'This is a longer description of the proposal. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero, non volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero.'
+        }
+        address={'#'}
+        mobileMode={mobileVersion}
+      />
 
       <VoteChart
-        votesFor={votesFor}
-        votesAgainst={votesAgainst}
-        timeLeft={timeLeft}
-        voteWinner={voteWinner}
+        votesFor={1865567}
+        votesAgainst={1740235}
+        timeLeft={4855555577}
+        voteWinner={2}
         selectedVote={selectedVoted}
       />
 
       {!voteWinner && (
         <VotePropose
-          availableAmount={availableAmount}
+          availableAmount={65245346}
           setProposingAmount={setProposingAmount}
           proposingAmount={proposingAmount}
         />
@@ -89,6 +99,10 @@ export const Card = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 425px) {
+    padding-top: 118px;
+  }
 
   // @media (max-width: 768px) {
   //   width: 100%;

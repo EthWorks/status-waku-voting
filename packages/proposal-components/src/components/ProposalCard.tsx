@@ -5,6 +5,7 @@ import { ProposalInfo } from './ProposalInfo'
 import { ProposalVote } from './ProposalVoteCard/ProposalVote'
 
 interface ProposalCardProps {
+  id: string
   theme: Theme
   heading: string
   text: string
@@ -14,11 +15,19 @@ interface ProposalCardProps {
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalCard({ heading, text, address, vote, voteWinner, theme }: ProposalCardProps) {
+export function ProposalCard({ id, heading, text, address, vote, voteWinner, theme }: ProposalCardProps) {
   return (
     <Card>
       <ProposalInfo heading={heading} text={text} address={address} />
-      <ProposalVote vote={vote} voteWinner={voteWinner} address={address} text={text} heading={heading} theme={theme} />
+      <ProposalVote
+        id={id}
+        vote={vote}
+        voteWinner={voteWinner}
+        address={address}
+        text={text}
+        heading={heading}
+        theme={theme}
+      />
     </Card>
   )
 }

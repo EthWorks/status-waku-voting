@@ -6,13 +6,14 @@ type ProposalInfoProps = {
   heading: string
   text: string
   address: string
+  mobileMode?: boolean
 }
 
-export function ProposalInfo({ heading, text, address }: ProposalInfoProps) {
+export function ProposalInfo({ heading, text, address, mobileMode }: ProposalInfoProps) {
   return (
     <Card>
       <CardHeading>{heading}</CardHeading>
-      <CardText>{text}</CardText>
+      <CardText className={mobileMode ? 'mobile' : ''}>{text}</CardText>
       <CardViewLink>
         <ViewLink address={address} />
       </CardViewLink>
@@ -67,6 +68,15 @@ export const CardText = styled.div`
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+  }
+
+  &.mobile {
+    @media (max-width: 600px) {
+      height: 56px;
+      overflow: auto;
+      text-overflow: unset;
+      -webkit-line-clamp: unset;
+    }
   }
 `
 
