@@ -6,7 +6,6 @@ import { ProposalList } from './ProposalList'
 import { VotingEmpty } from './VotingEmpty'
 import { NotificationItem } from './NotificationItem'
 
-
 export function Proposal() {
   return (
     <ProposalWrapper>
