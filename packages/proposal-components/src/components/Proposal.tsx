@@ -8,6 +8,7 @@ import { VotingEmpty } from './VotingEmpty'
 export function Proposal() {
   return (
     <ProposalWrapper>
+      <VotingEmpty theme={blueTheme} />
       <ProposalHeader theme={blueTheme} />
       <ProposalList theme={blueTheme} />
       {/* <VotingEmpty theme={blueTheme} /> */}
