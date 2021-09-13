@@ -30,12 +30,4 @@ const ProposalWrapper = styled.div`
   padding: 150px 32px 50px;
   width: 100%;
   min-height: 100vh;
-
-  @media (max-width: 600px) {
-    padding: 132px 16px 32px;
-  }
-
-  @media (max-width: 425px) {
-    padding: 64px 16px 84px;
-  }
 `

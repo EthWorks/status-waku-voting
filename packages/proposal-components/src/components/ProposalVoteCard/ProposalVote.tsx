@@ -31,7 +31,6 @@ export function ProposalVote({
 }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
-  const [showVoteMobile, setShowVoteMobile] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [proposingAmount, setProposingAmount] = useState(0)
   const [selectedVoted, setSelectedVoted] = useState(0)
@@ -48,35 +47,8 @@ export function ProposalVote({
     setShowConfirmModal(val)
   }
 
-  const [mobileVersion, setMobileVersion] = useState(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 600) {
-        setMobileVersion(true)
-      } else {
-        setMobileVersion(false)
-      }
-    }
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   return (
-    <Card onClick={() => (mobileVersion ? setShowVoteMobile(true) : null)}>
-      {showVoteMobile && (
-        <ProposalVoteMobile
-          votesFor={1865567}
-          votesAgainst={1740235}
-          timeLeft={4855555577}
-          availableAmount={65245346}
-          heading={heading}
-          text={text}
-          address={address}
-        />
-      )}
-
+    <Card>
       {showVoteModal && (
         <Modal heading={heading} setShowModal={setShowVoteModal} theme={theme}>
           <VoteModal
