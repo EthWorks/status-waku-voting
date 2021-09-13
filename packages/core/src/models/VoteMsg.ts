@@ -22,17 +22,16 @@ type Message = {
   voter: string
 }
 
-
 export function createSignMsgParams(message: Message, chainId: number, verifyingContract: string) {
   const msgParams: any = {
     domain: {
       name: 'Waku proposal',
       version: '1',
       chainId,
-      verifyingContract
+      verifyingContract,
     },
     message: {
-      ...message
+      ...message,
     },
     primaryType: 'Vote',
     types: {
@@ -62,7 +61,15 @@ export class VoteMsg {
   public id: string
   public chainId: number
 
-  constructor(signature: string, roomId: number, voter: string, answer: number, tokenAmount: BigNumber, chainId: number, timestamp: number) {
+  constructor(
+    signature: string,
+    roomId: number,
+    voter: string,
+    answer: number,
+    tokenAmount: BigNumber,
+    chainId: number,
+    timestamp: number
+  ) {
     this.id = utils.id([voter, timestamp, signature].join())
     this.roomId = roomId
     this.voter = voter
@@ -83,7 +90,11 @@ export class VoteMsg {
   ): Promise<VoteMsg | undefined> {
     const signFunction = createSignFunction(signer)
     const voter = await signer.getAddress()
-    const msg = { roomIdAndType: BigNumber.from(roomId).mul(2).add(answer).toHexString(), tokenAmount: tokenAmount.toHexString(), voter }
+    const msg = {
+      roomIdAndType: BigNumber.from(roomId).mul(2).add(answer).toHexString(),
+      tokenAmount: tokenAmount.toHexString(),
+      voter,
+    }
     const params = [msg.voter, JSON.stringify(createSignMsgParams(msg, chainId, contractAddress))]
     const signature = await signFunction(params)
     if (signature) {
@@ -123,11 +134,10 @@ export class VoteMsg {
       }
       const signature = utils.hexlify(payload.signature)
 
-
       const msg = {
         roomIdAndType: BigNumber.from(payload.roomId).mul(2).add(payload.answer).toHexString(),
         tokenAmount: utils.hexlify(payload.tokenAmount),
-        voter: utils.getAddress(utils.hexlify(payload.voter))
+        voter: utils.getAddress(utils.hexlify(payload.voter)),
       }
 
       const params = {
@@ -137,13 +147,15 @@ export class VoteMsg {
       if (verifyFunction ? !verifyFunction : !verifySignature(params, msg.voter)) {
         return undefined
       }
-      return new VoteMsg(signature,
+      return new VoteMsg(
+        signature,
         BigNumber.from(payload.roomId).toNumber(),
         utils.getAddress(utils.hexlify(payload.voter)),
         payload.answer,
         BigNumber.from(payload.tokenAmount),
         chainId,
-        payload.timestamp)
+        payload.timestamp
+      )
     } catch {
       return undefined
     }

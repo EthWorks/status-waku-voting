@@ -5,7 +5,7 @@ import { Modal, Networks, CreateButton } from '@status-waku-voting/react-compone
 import { Theme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 import { ProposeModal } from './ProposeModal'
 import { ProposeVoteModal } from './ProposeVoteModal'
-import {WakuVoting} from '@status-waku-voting/core'
+import { WakuVoting } from '@status-waku-voting/core'
 import { BigNumber } from 'ethers'
 
 type ProposalHeaderProps = {
@@ -15,7 +15,6 @@ type ProposalHeaderProps = {
 
 export function ProposalHeader({ theme, wakuVoting }: ProposalHeaderProps) {
   const { activateBrowserWallet, account, library } = useEthers()
-  const [showProposeCreation, setShowProposeCreation] = useState(false)
   const [selectConnect, setSelectConnect] = useState(false)
   const [showProposeModal, setShowProposeModal] = useState(false)
   const [showProposeVoteModal, setShowProposeVoteModal] = useState(false)
@@ -26,12 +25,6 @@ export function ProposalHeader({ theme, wakuVoting }: ProposalHeaderProps) {
     setShowProposeVoteModal(val)
     setShowProposeModal(false)
   }
-
-  const showPolls = async() => {
-    console.log(await wakuVoting.getVotes())
-  }
-  
-  showPolls()
 
   return (
     <Wrapper>
@@ -56,6 +49,7 @@ export function ProposalHeader({ theme, wakuVoting }: ProposalHeaderProps) {
       {showProposeVoteModal && (
         <Modal heading="Create proposal" theme={theme} setShowModal={setShowProposeVoteModal}>
           <ProposeVoteModal
+            wakuVoting={wakuVoting}
             title={title}
             text={text}
             availableAmount={6524354}
@@ -67,16 +61,12 @@ export function ProposalHeader({ theme, wakuVoting }: ProposalHeaderProps) {
       )}
 
       {account ? (
-<<<<<<< HEAD
-        <CreateButton theme={theme} onClick={() => setShowProposeModal(true)}>
-=======
-        <CreateButton theme={theme} onClick={() => {
-          setShowProposeCreation(true)
-          if(library)
-          wakuVoting.createVote(library.getSigner(), 'test', 'test2', BigNumber.from(100))
-        }
-        }>
->>>>>>> a57c6f5 (Working example)
+        <CreateButton
+          theme={theme}
+          onClick={() => {
+            setShowProposeModal(true)
+          }}
+        >
           Create proposal
         </CreateButton>
       ) : (
