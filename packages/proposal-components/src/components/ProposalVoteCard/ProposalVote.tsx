@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
@@ -8,19 +8,30 @@ import { ViewLink } from '../ViewLink'
 import { Modal, Theme } from '@status-waku-voting/react-components'
 import { VoteModal } from '../VoteModal'
 import { VoteAnimatedModal } from '../VoteAnimatedModal'
+import { ProposalVoteMobile } from '../mobile/ProposalVoteMobile'
 
 interface ProposalVoteProps {
   theme: Theme
   vote?: number
   voteWinner?: number
   heading: string
+  text: string
   address: string
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalVote({ vote, voteWinner, address, heading, theme, hideModalFunction }: ProposalVoteProps) {
+export function ProposalVote({
+  vote,
+  voteWinner,
+  address,
+  heading,
+  text,
+  theme,
+  hideModalFunction,
+}: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
+  const [showVoteMobile, setShowVoteMobile] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [proposingAmount, setProposingAmount] = useState(0)
   const [selectedVoted, setSelectedVoted] = useState(0)
@@ -37,8 +48,35 @@ export function ProposalVote({ vote, voteWinner, address, heading, theme, hideMo
     setShowConfirmModal(val)
   }
 
+  const [mobileVersion, setMobileVersion] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 600) {
+        setMobileVersion(true)
+      } else {
+        setMobileVersion(false)
+      }
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
-    <Card>
+    <Card onClick={() => (mobileVersion ? setShowVoteMobile(true) : null)}>
+      {showVoteMobile && (
+        <ProposalVoteMobile
+          votesFor={1865567}
+          votesAgainst={1740235}
+          timeLeft={4855555577}
+          availableAmount={65245346}
+          heading={heading}
+          text={text}
+          address={address}
+        />
+      )}
+
       {showVoteModal && (
         <Modal heading={heading} setShowModal={setShowVoteModal} theme={theme}>
           <VoteModal
