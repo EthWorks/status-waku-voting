@@ -7,6 +7,7 @@ import { VoteSubmitButton } from '../ProposalVoteCard/VoteSubmitButton'
 import { VoteChart } from '../ProposalVoteCard/VoteChart'
 import { ProposalInfo } from '../ProposalInfo'
 import { VotePropose } from '../VotePropose'
+import { VotesBtns } from '../ProposalVoteCard/ProposalVote'
 
 interface ProposalVoteMobileProps {
   vote?: number
@@ -89,7 +90,10 @@ export function ProposalVoteMobile({
         )}
       </CardButtons>
 
-      <CardVoteBottom>{vote && <VoteSubmitButton votes={vote} disabled={!account} />}</CardVoteBottom>
+      <CardVoteBottom>
+        {' '}
+        <VoteSubmitButton votes={2345678} disabled={!account} />
+      </CardVoteBottom>
     </Card>
   )
 }
@@ -109,22 +113,12 @@ const CardButtons = styled.div`
   width: 100%;
 `
 
-const VotesBtns = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  @media (max-width: 600px) {
-    margin-top: 24px;
-  }
-`
-
 const CardVoteBottom = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 24px;
+  margin-top: 32px;
 `
 
 const VoteChartWrap = styled.div`
