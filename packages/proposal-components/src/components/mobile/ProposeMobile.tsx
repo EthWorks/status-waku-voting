@@ -1,9 +1,9 @@
+import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ProposingBtn } from '../Buttons'
 import { CardHeading, CardText } from '../ProposalInfo'
-import { ProposingData } from '../ProposeModal'
-import { VotePropose } from '../VotePropose'
+import { InfoText, Label, ProposingData, ProposingInfo, ProposingInput, ProposingTextInput } from '../ProposeModal'
 
 interface ProposeVoteModalProps {
   availableAmount: number
@@ -22,31 +22,59 @@ export function ProposeMobile({
   setTitle,
   setText,
 }: ProposeVoteModalProps) {
-  const [proposingAmount, setProposingAmount] = useState(0)
-  return (
-    <ProposingData>
-      <ProposingCardHeading>{title}</ProposingCardHeading>
-      <ProposingCardText>{text}</ProposingCardText>
+  const insufficientFunds = availableAmount < 10000
+  // const [title, setTitle] = useState('')
+  // const [text, setText] = useState('')
 
-      <VoteProposeWrap>
-        <VotePropose
-          availableAmount={availableAmount}
-          setProposingAmount={setProposingAmount}
-          proposingAmount={proposingAmount}
+  return (
+    <ProposingDataMobile>
+      {insufficientFunds && (
+        <ProposingInfo>
+          <span>⚠️</span>
+          <InfoText>You need at least 10,000 ABC to create a proposal!</InfoText>
+        </ProposingInfo>
+      )}
+      <Label>
+        Title
+        <ProposingInput
+          cols={2}
+          maxLength={90}
+          placeholder="E.g. Change the rate of the token issuance"
+          value={title}
+          onInput={(e) => {
+            setTitle(e.currentTarget.value)
+          }}
+          required
         />
-      </VoteProposeWrap>
+      </Label>
+
+      <Label>
+        Description
+        <ProposingTextInput
+          maxLength={440}
+          placeholder="Describe your proposal as detailed as you can in 440 characters."
+          value={text}
+          onInput={(e) => {
+            setText(e.currentTarget.value)
+          }}
+          required
+        />
+      </Label>
 
       <ProposingBtn
-        onClick={() => {
-          setShowModal(false), setTitle(''), setText('')
-        }}
+        disabled={!text || !title || insufficientFunds}
+        theme={blueTheme}
+        // onClick={() => setShowProposeVoteModal(true)}
       >
-        Create proposal
+        Continue
       </ProposingBtn>
-    </ProposingData>
+    </ProposingDataMobile>
   )
 }
 
+const ProposingDataMobile = styled(ProposingData)`
+  padding-top: 118px;
+`
 export const VoteProposeWrap = styled.div`
   margin-bottom: 32px;
   width: 100%;
