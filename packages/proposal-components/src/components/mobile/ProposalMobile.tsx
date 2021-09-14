@@ -5,8 +5,13 @@ import styled from 'styled-components'
 import { ProposalVoteMobile } from './ProposalVoteMobile'
 import { ProposeMobile } from './ProposeMobile'
 import { ProposalMainMobile } from './ProposalMainMobile'
+import { WakuVoting } from '@status-waku-voting/core'
 
-export function ProposalMobile() {
+type ProposalMobileProps = {
+  wakuVoting: WakuVoting
+}
+
+export function ProposalMobile({ wakuVoting }: ProposalMobileProps) {
   return (
     <BrowserRouter>
       <ProposalWrapper>
@@ -14,7 +19,9 @@ export function ProposalMobile() {
           <Route exact path="/" render={() => <Redirect to="/proposal" />} />
           <Route exact path="/votingRoom/:id" component={ProposalVoteMobile} />
           <Route exact path="/creation" component={ProposeMobile} />
-          <Route exact path="/proposal" component={ProposalMainMobile} />
+          <Route exact path="/proposal">
+            <ProposalMainMobile wakuVoting={wakuVoting} />
+          </Route>
         </Switch>
       </ProposalWrapper>
     </BrowserRouter>
