@@ -2,19 +2,19 @@ import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import { BrowserRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { ProposalHeader } from '../ProposalHeader'
 import { blueTheme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
 import { ProposalList } from '../ProposalList'
 // import { VotingEmpty } from './VotingEmpty'
 // import { NotificationItem } from './NotificationItem'
 import { ProposalVoteMobile } from './ProposalVoteMobile'
 import { ProposeMobile } from './ProposeMobile'
+import { ProposalHeaderMobile } from './ProposalHeaderMobile'
 
 export function ProposalMobile() {
   return (
     <BrowserRouter>
       <ProposalWrapper>
-        <ProposalHeader theme={blueTheme} />
+        <ProposalHeaderMobile theme={blueTheme} />
         <Switch>
           <Route exact path="/" render={() => <Redirect to="/proposal" />} />
           <Route exact path="/votingRoom/:id" component={ProposalVoteMobile} />
