@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { FinalBtn, VoteBtnAgainst, VoteBtnFor } from '../Buttons'
@@ -11,32 +10,20 @@ import { VoteModal } from '../VoteModal'
 import { VoteAnimatedModal } from '../VoteAnimatedModal'
 
 interface ProposalVoteProps {
-  id: number
   theme: Theme
   vote?: number
   voteWinner?: number
   heading: string
-  text: string
   address: string
   hideModalFunction?: (val: boolean) => void
 }
 
-export function ProposalVote({
-  id,
-  vote,
-  voteWinner,
-  address,
-  heading,
-  text,
-  theme,
-  hideModalFunction,
-}: ProposalVoteProps) {
+export function ProposalVote({ vote, voteWinner, address, heading, theme, hideModalFunction }: ProposalVoteProps) {
   const { account } = useEthers()
   const [showVoteModal, setShowVoteModal] = useState(false)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [proposingAmount, setProposingAmount] = useState(0)
   const [selectedVoted, setSelectedVoted] = useState(0)
-  const history = useHistory()
 
   const setNext = (val: boolean) => {
     setShowConfirmModal(val)
@@ -51,7 +38,7 @@ export function ProposalVote({
   }
 
   return (
-    <Card onClick={() => history.push(`/votingRoom/${id.toString}`)}>
+    <Card>
       {showVoteModal && (
         <Modal heading={heading} setShowModal={setShowVoteModal} theme={theme}>
           <VoteModal
