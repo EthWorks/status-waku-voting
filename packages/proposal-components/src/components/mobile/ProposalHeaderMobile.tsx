@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import { useEthers } from '@usedapp/core'
 import { Modal, Networks, CreateButton } from '@status-waku-voting/react-components'
 import { Theme } from '@status-waku-voting/react-components/dist/esm/src/style/themes'
-import { ProposeModal } from '../ProposeModal'
-import { ProposeVoteModal } from '../ProposeVoteModal'
 import { Wrapper } from '../ProposalHeader'
 
 type ProposalHeaderMobileProps = {
