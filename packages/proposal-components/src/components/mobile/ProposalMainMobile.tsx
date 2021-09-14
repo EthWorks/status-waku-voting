@@ -5,12 +5,17 @@ import { VotingEmpty } from '../VotingEmpty'
 import { NotificationItem } from '../NotificationItem'
 import { ProposalHeaderMobile } from './ProposalHeaderMobile'
 import styled from 'styled-components'
+import { WakuVoting } from '@status-waku-voting/core'
 
-export function ProposalMainMobile() {
+type ProposalMainMobileProps = {
+  wakuVoting: WakuVoting
+}
+
+export function ProposalMainMobile({ wakuVoting }: ProposalMainMobileProps) {
   return (
     <ProposalWrapper>
       <ProposalHeaderMobile theme={blueTheme} />
-      <ProposalList theme={blueTheme} />
+      <ProposalList theme={blueTheme} wakuVoting={wakuVoting} />
       {/* <VotingEmpty theme={blueTheme} /> */}
       <NotificationItem text={'Proposal you finalized will be settled after 10 confirmations.'} address={'#'} />
     </ProposalWrapper>

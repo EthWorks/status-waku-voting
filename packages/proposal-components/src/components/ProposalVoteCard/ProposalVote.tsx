@@ -11,7 +11,7 @@ import { VoteModal } from '../VoteModal'
 import { VoteAnimatedModal } from '../VoteAnimatedModal'
 
 interface ProposalVoteProps {
-  id: string
+  id: number
   theme: Theme
   vote?: number
   voteWinner?: number
@@ -51,7 +51,7 @@ export function ProposalVote({
   }
 
   return (
-    <Card onClick={() => history.push(`/votingRoom/${id}`)}>
+    <Card onClick={() => history.push(`/votingRoom/${id.toString}`)}>
       {showVoteModal && (
         <Modal heading={heading} setShowModal={setShowVoteModal} theme={theme}>
           <VoteModal

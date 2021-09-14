@@ -5,7 +5,7 @@ import { ProposalInfo } from './ProposalInfo'
 import { ProposalVote } from './ProposalVoteCard/ProposalVote'
 
 interface ProposalCardProps {
-  id: string
+  id: number
   theme: Theme
   heading: string
   text: string
